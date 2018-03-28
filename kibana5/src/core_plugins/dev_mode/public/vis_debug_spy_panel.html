@@ -1,0 +1,35 @@
+<div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>
+          <span translate>Vis State</span>
+        </label>
+        <pre>{{visStateJson}}</pre>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label translate>Details</label>
+        <table class="table">
+          <tr>
+            <th>
+              <span translate>Type Name</span>
+            </th>
+            <td>
+              {{vis.type.name|translate}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              <span translate>Hierarchical Data</span>
+            </th>
+            <td>
+              {{vis.isHierarchical()|translate}}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="form-group">
+  <label for="field">
+    <span translate>Field</span>
+  </label>
+
+  <span class="pull-right text-warning hintbox-label" ng-show="agg.params.field.analyzed"
+      ng-click="showAnalyzedFieldWarning = !showAnalyzedFieldWarning">
+    <i class="fa fa-warning"></i> <span translate>Analyzed Field</span>
+  </span>
+  <div class="hintbox" ng-show="showAnalyzedFieldWarning && agg.params.field.analyzed">
+    <p>
+    <strong translate>Careful!</strong> <span translate>The field selected contains analyzed strings. Analyzed strings are highly unique and can use a lot of memory to visualize. Values such as</span> <i translate>foo-bar</i> <span translate>will be broken into</span> <i translate>foo</i> <span translate>and</span> <i translate>bar</i><span translate>. See</span> <a href="http://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html" target="_blank"><span translate>Mapping Types</span></a> <span translate>for more information on setting this field as</span> <i translate>keyword</i> <span translate>(not analyzed).</span>
+    </p>
+
+    <p ng-show="indexedFields.byName[agg.params.field.name + '.keyword'].analyzed == false">
+      <strong translate>Tip:</strong> <i>{{agg.params.field.name + '.keyword'}}</i> <span translate>may be a non analyzed version of this field.</span>
+    </p>
+
+    <p ng-show="indexedFields.byName[agg.params.field.name + '.raw'].analyzed == false">
+      <strong translate>Tip:</strong> <i >{{agg.params.field.name + '.raw'}}</i> <span translate>may be a non analyzed version of this field.</span>
+    </p>
+  </div>
+
+  <select
+    class="form-control"
+    name="field"
+    required
+    ng-model="agg.params.field"
+    ng-show="indexedFields.length"
+    auto-select-if-only-one="indexedFields"
+    ng-options="field as field.displayName group by field.type for field in indexedFields"
+    ng-change="aggParam.onChange(agg)">
+  </select>
+
+  <div class="hintbox" ng-if="!indexedFields.length">
+    <p>
+      <i class="fa fa-danger text-danger"></i>
+      <strong translate>No Compatible Fields:</strong> <span translate>The</span> "{{ vis.indexPattern.id }}" <span translate>index pattern does not contain any of the following field types:</span> {{ agg.type.params.byName.field.filterFieldTypes | commaList:false }}
+    </p>
+  </div>
+
+</div>

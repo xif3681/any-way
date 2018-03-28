@@ -1,0 +1,4 @@
+node('docker') {
+    stage 'build anyrobot-web'
+    build 'anyrobot-web'
+}

@@ -1,0 +1,34 @@
+<ul ng-show="timefilter.enabled" class="nav navbar-nav navbar-right navbar-timepicker">
+  <li>
+    <button
+      style="position: relative; top: 5px;  padding: 3px 14px;margin-left: 5px;color: #5A5A5A"
+      ng-click="toggleRefresh()"
+      ng-show="timefilter.refreshInterval.value > 0">
+      <i class="fa" ng-class="timefilter.refreshInterval.pause ? 'fa-play' : 'fa-pause'"></i>
+    </button>
+  </li>
+
+  <li
+    ng-show="timefilter.refreshInterval.value > 0 || kbnTopNav.isCurrent('interval') || kbnTopNav.isCurrent('filter')">
+
+    <button ng-click="kbnTopNav.toggle('interval')"
+    ng-class="{active: kbnTopNav.isCurrent('interval') }"
+    style="position: relative; top: 5px;  padding: 3px 8px;margin-left: 5px;color: #5A5A5A"
+    class="navbar-timepicker-auto-refresh-desc">
+      <span ng-show="timefilter.refreshInterval.value === 0" ><i class="fa fa-repeat"></i> <span translate>Auto-refresh</span></span>
+      <span ng-show="timefilter.refreshInterval.value > 0" >{{timefilter.refreshInterval.display|translate}}</span>
+    </button>
+  </li>
+
+  <li>
+    <button ng-class="{active: kbnTopNav.isCurrent('filter')}"
+      style="position: relative; top: 5px;  padding: 3px 8px;margin-left: 5px;"
+      ng-click="kbnTopNav.toggle('filter')"
+      aria-haspopup="true"
+      aria-expanded="false"
+      class="navbar-timepicker-time-desc">
+      <i aria-hidden="true" class="fa fa-clock-o"></i>
+      <pretty-duration from="timefilter.time.from" to="timefilter.time.to"></pretty-duration>
+    </button>
+  </li>
+</ul>

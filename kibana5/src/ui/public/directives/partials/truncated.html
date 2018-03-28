@@ -1,0 +1,6 @@
+<span ng-if="!isHtml">{{content}}</span>
+<!-- <span ng-if="isHtml">{{content}}</span> -->
+<span ng-if="isHtml" ng-bind-html="content" style="display: inline-block;float: left;"></span>
+<span ng-if="truncated" style="display: inline-block;float: right; ">
+  <a ng-click="toggle()" style="text-decoration: none;">{{action|translate}}</a>
+</span>

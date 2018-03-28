@@ -1,0 +1,17 @@
+<!--<div class="form-group"-->
+<!--ng-hide="agg.__type.name==='terms'||(agg.__schema.aggFilter.length===1&&agg.__schema.aggFilter[0] ==='start_end_times')">-->
+<div class="form-group"
+     ng-hide="(agg.__type.name==='terms'&&agg.vis.type.name==='gantt')
+     ||(agg.__schema.aggFilter.length===1&&agg.__schema.aggFilter[0] ==='start_end_times')
+     ||(agg.vis.type.name ==='arMonitor')">
+  <label ng-if="$index < 1 || groupName !== 'buckets'" translate>Aggregation</label>
+  <label ng-if="$index >= 1 && groupName === 'buckets'" translate>Sub Aggregation</label>
+  <select
+    name="agg"
+    class="form-control"
+    ng-model="agg.type"
+    required
+    auto-select-if-only-one="aggTypeOptions | aggFilter:agg.schema.aggFilter"
+    ng-options="agg as agg.title for agg in aggTypeOptions | aggFilter:agg.schema.aggFilter">
+  </select>
+</div>

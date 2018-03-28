@@ -1,0 +1,41 @@
+<div class="form-group">
+  <label translate>Per Page</label>
+  <input type="number" ng-model="vis.params.perPage" class="form-control">
+</div>
+
+<div class="checkbox">
+  <label>
+    <input type="checkbox" ng-model="vis.params.showMeticsAtAllLevels">
+    <span translate>Show metrics for every bucket/level</span>
+  </label>
+</div>
+
+<div class="checkbox">
+  <label>
+    <input type="checkbox" ng-model="vis.params.showPartialRows">
+    <span translate>Show partial rows</span>
+  </label>
+</div>
+
+<div class="checkbox">
+  <label>
+    <input type="checkbox" ng-model="metricsAtAllLevels" disabled>
+    <span translate>Calculate metrics for every bucket/level</span>
+  </label>
+</div>
+
+<div class="checkbox">
+  <label>
+    <input type="checkbox" ng-model="vis.params.showTotal">
+    <span translate>Show total</span>
+  </label>
+</div>
+
+<div>
+  <label translate>Total function</label>
+  <select ng-disabled="!vis.params.showTotal"
+          class="form-control"
+          ng-model="vis.params.totalFunc"
+          ng-options="x.enValue as x.value for x in totalAggregations">
+  </select>
+</div>

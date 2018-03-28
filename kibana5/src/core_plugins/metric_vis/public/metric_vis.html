@@ -1,0 +1,67 @@
+<div ng-controller="KbnMetricVisController" class="metric-vis">
+  <div class="metric-container" ng-repeat="metric in metrics">
+    <div class="metric-value" ng-style="{'font-size': vis.params.fontSize+'pt'}">
+      {{metric.value}}
+      <span ng-if="vis.params.ratios">
+          <span ng-style="{'font-size': vis.params.fontSize/5+'pt'}" style="font-weight: normal">
+            {{'环比'|translate}}
+            <!--红色表示增长-->
+            <span style="color: red" ng-if="metric.ratios>0&&metric.flag">
+               <i aria-hidden="true" class="fa fa-long-arrow-up" tooltip="{{'上升'|translate}}"></i>
+              {{metric.ratios}}%
+              <i
+                aria-label="{{'相较于（'|translate}}{{lastStartTime}}{{'到'|translate}}{{lastEndTime}}{{'）增长了'|translate}}{{metric.ratios}}%"
+                tooltip="{{'相较于（'|translate}}{{lastStartTime}}{{'到'|translate}}{{lastEndTime}}{{'）增长了'|translate}}{{metric.ratios}}%"
+                tooltip-placement="top"
+                class="fa fa-info-circle" style="color: #000"></i>
+            </span>
+            <!--绿色表示减少-->
+            <span style="color: green" ng-if="metric.ratios<0&&metric.flag">
+              <i aria-hidden="true" class="fa fa-long-arrow-down" tooltip="{{'下降'|translate}}"></i>
+              {{-metric.ratios}}%
+
+              <i
+                aria-label="{{'相较于（'|translate}}{{lastStartTime}}{{'到'|translate}}{{lastEndTime}}{{'）降低了'|translate}}{{-metric.ratios}}%"
+                tooltip="{{'相较于（'|translate}}{{lastStartTime}}{{'到'|translate}}{{lastEndTime}}{{'）降低了'|translate}}{{-metric.ratios}}%"
+                tooltip-placement="top"
+                class="fa fa-info-circle" style="color: #000"></i>
+            </span>
+            <!--若环比增长率为0,则环比增长增长率显示为“0”，颜色为黑色。-->
+            <!--若上期数无法获取或者为空。则环比增长增长率显示为“---”，颜色为黑色-->
+            <span ng-if="(metric.ratios==='0.00'||metric.ratios==='0')&&metric.flag">
+               {{metric.ratios}}
+              <i
+                aria-label="{{'相较于（'|translate}}{{lastStartTime}}{{'到'|translate}}{{lastEndTime}}{{'），保持不变'|translate}}"
+                tooltip="{{'相较于（'|translate}}{{lastStartTime}}{{'到'|translate}}{{lastEndTime}}{{'），保持不变'|translate}}"
+                tooltip-placement="top"
+                class="fa fa-info-circle"></i>
+            </span>
+            <span ng-if="metric.ratios==='---'&&metric.flag">
+               ---
+              <i
+                aria-label="{{'无法获取（'|translate}}{{lastStartTime}}{{'到'|translate}}{{lastEndTime}}{{'）的统计数据'|translate}}"
+                tooltip="{{'无法获取（'|translate}}{{lastStartTime}}{{'到'|translate}}{{lastEndTime}}{{'）的统计数据'|translate}}"
+                tooltip-placement="top"
+                class="fa fa-info-circle"></i>
+            </span>
+            <span ng-if="metric.ratios==='###'&&metric.flag">
+               ---
+              <i
+                aria-label="{{'（'|translate}}{{lastStartTime}}{{'到'|translate}}{{lastEndTime}}{{'）'|translate}}{{metric.label}}{{'为0,无法计算环比增长率'|translate}}"
+                tooltip="{{'（'|translate}}{{lastStartTime}}{{'到'|translate}}{{lastEndTime}}{{'）'|translate}}{{metric.label}}{{'为0,无法计算环比增长率'|translate}}"
+                tooltip-placement="top"
+                class="fa fa-info-circle"></i>
+            </span>
+            <span ng-if="!metric.flag">
+               ---
+              <i aria-label="{{'无法获取（'|translate}}{{lastEndTime}}{{'到'|translate}}{{nowEndTime}}{{'）的统计数据'|translate}}"
+                 tooltip="{{'无法获取（'|translate}}{{lastEndTime}}{{'到'|translate}}{{nowEndTime}}{{'）的统计数据'|translate}}"
+                 tooltip-placement="top"
+                 class="fa fa-info-circle"></i>
+            </span>
+        </span>
+      </span>
+    </div>
+    <div>{{metric.label}}</div>
+  </div>
+</div>

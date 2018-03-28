@@ -1,0 +1,126 @@
+<div class="form-group">
+  <label translate>Type</label>
+  <select
+    ng-model="editor.formatParams.type"
+    ng-options="type.id as type.name for type in editor.field.format.type.urlTypes"
+    class="form-control">
+  </select>
+</div>
+
+<div class="form-group">
+  <span class="pull-right text-info hintbox-label" ng-click="editor.showUrlTmplHelp = !editor.showUrlTmplHelp">
+    <i class="fa fa-info"></i> <span translate>Url Template Help</span>
+  </span>
+
+  <label translate>Url Template</label>
+  <div class="hintbox" ng-if="editor.showUrlTmplHelp">
+    <h4 class="hintbox-heading">
+      <i class="fa fa-question-circle text-info"></i> <span translate>Url Template Help</span>
+    </h4>
+
+    <p translate>
+      UrlTemplate
+    </p>
+
+    <ul>
+      <li>
+        <strong translate>value</strong> &mdash; <span translate>The uri-escaped value</span>
+      </li>
+      <li>
+        <strong translate>rawValue</strong> &mdash; <span translate>The unescaped value</span>
+      </li>
+    </ul>
+
+    <table class="table table-striped table-bordered">
+      <caption translate>Examples</caption>
+      <thead>
+        <tr>
+          <th translate>Value</th>
+          <th translate>Template</th>
+          <th translate>Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1234</td>
+          <td ng-non-bindable>http://company.net/profiles?user_id={{value}}</td>
+          <td>http://company.net/profiles?user_id=1234</td>
+        </tr>
+        <tr>
+          <td>users/admin</td>
+          <td ng-non-bindable>http://company.net/groups?id={{value}}</td>
+          <td>http://company.net/groups?id=users%2Fadmin</td>
+        </tr>
+        <tr>
+          <td>/images/favicon.ico</td>
+          <td ng-non-bindable>http://www.site.com{{rawValue}}</td>
+          <td>http://www.site.com/images/favicon.ico</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <input ng-model="editor.formatParams.urlTemplate" class="form-control">
+</div>
+
+<div class="form-group">
+  <span class="pull-right text-info hintbox-label" ng-click="editor.showLabelTmplHelp = !editor.showLabelTmplHelp">
+    <i class="fa fa-info"></i> <span translate>Label Template Help</span>
+  </span>
+
+  <label translate>Label Template</label>
+  <div class="hintbox" ng-if="editor.showLabelTmplHelp">
+    <h4 class="hintbox-heading">
+      <i class="fa fa-question-circle text-info"></i> <span translate>Label Template Help</span>
+    </h4>
+
+    <p translate>
+      UrlTemplateHelp
+    </p>
+
+    <ul>
+      <li>
+        <strong translate>value</strong> &mdash; <span translate>The fields value</span>
+      </li>
+      <li>
+        <strong translate>url</strong> &mdash; <span translate>The formatted url</span>
+      </li>
+    </ul>
+
+    <table class="table table-striped table-bordered">
+      <caption translate>Examples</caption>
+      <thead>
+        <tr>
+          <th translate>Value</th>
+          <th translate>Url Template</th>
+          <th translate>Label Template</th>
+          <th translate>Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1234</td>
+          <td ng-non-bindable>http://company.net/profiles?user_id={{value}}</td>
+          <td ng-non-bindable>User #{{value}}</td>
+          <td>
+            <!--<a href="http://company.net/profiles?user_id=1234">User #1234</a>-->
+            User #1234
+          </td>
+        </tr>
+        <tr>
+          <td>/assets/main.css</td>
+          <td ng-non-bindable>http://site.com{{rawValue}}</td>
+          <td>View Asset</td>
+          <td>
+            View Asset
+            <!--<a href="http://site.com/assets/main.css">View Asset</a>-->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <input ng-model="editor.formatParams.labelTemplate" class="form-control">
+</div>
+
+<field-format-editor-samples inputs="url.samples[editor.formatParams.type]"></field-format-editor-samples>

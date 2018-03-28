@@ -1,0 +1,129 @@
+<!-- header -->
+<div class="vis-editor-agg-header">
+
+  <!-- open/close editor -->
+  <button
+    aria-label="{{ editorOpen ? 'Close Editor' : 'Open Editor' }}"
+    ng-click="editorOpen = !editorOpen"
+    type="button"
+    class="btn btn-primary btn-xs vis-editor-agg-header-toggle">
+    <i aria-hidden="true" ng-class="{ 'fa-caret-down': editorOpen, 'fa-caret-right': !editorOpen }" class="fa"></i>
+  </button>
+
+  <!-- title -->
+  <span class="vis-editor-agg-header-title">
+    {{ agg.schema.title |translate}}
+    <kbn-info ng-if="agg.schema.title === 'arAnotherState'"
+              placement="right"
+              info="{{'设置所有监控状态触发条件之外的其余状态的显示效果'|translate}}">
+    </kbn-info>
+    <kbn-info ng-if="agg.schema.title === '监控状态'"
+              placement="right"
+              info="{{'面板上的监控状态的顺序代表其优先级,从上到下优先级依次降低。当多个监视状态被同时触发时, 将显示优先级较高的监视状态及其颜色。您可以通过拖动来修改监控状态的优先级。'|translate}}">
+    </kbn-info>
+  </span>
+
+  <!-- description -->
+  <span ng-if="!editorOpen && aggForm.$valid" class="vis-editor-agg-header-description">
+    {{ describe() |translate}}
+  </span>
+
+  <!-- error -->
+  <span ng-if="!editorOpen && aggForm.$invalid" class="vis-editor-agg-header-description danger">
+    {{ aggForm.describeErrors() |translate}}
+  </span>
+
+  <!-- controls !!!actually disabling buttons will break tooltips¡¡¡ -->
+  <div class="vis-editor-agg-header-controls btn-group">
+
+  <!-- disable aggregation 监控状态 -->
+  <button
+    ng-if="agg.schema.title === '监控状态' && agg.enabled && canRemove(agg)"
+    ng-click="agg.enabled = false "
+    aria-label="Disable aggregation"
+    tooltip="{{'禁用监控'|translate}}"
+    tooltip-append-to-body="true"
+    type="button"
+    class="btn btn-xs">
+    <i aria-hidden="true" class="fa fa-toggle-on"></i>
+  </button>
+
+  <!-- enable aggregation 监控状态-->
+  <button
+    ng-if="agg.schema.title === '监控状态' && !agg.enabled"
+    ng-click="agg.enabled = true"
+    aria-label="Enable aggregation"
+    tooltip="{{'启用监控'|translate}}"
+    tooltip-append-to-body="true"
+    type="button"
+    class="btn btn-xs">
+    <i aria-hidden="true" class="fa fa-toggle-off"></i>
+  </button>
+
+
+
+    <!-- disable aggregation 非监控状态-->
+    <button
+      ng-if="agg.schema.title !== '监控状态' && agg.enabled && canRemove(agg)"
+      ng-click="agg.enabled = false"
+      aria-label="Disable aggregation"
+      tooltip="{{'Disable aggregation'|translate}}"
+      tooltip-append-to-body="true"
+      type="button"
+      class="btn btn-xs">
+      <i aria-hidden="true" class="fa fa-toggle-on"></i>
+    </button>
+
+    <!-- enable aggregation 非监控状态-->
+    <button
+      ng-if="agg.schema.title !== '监控状态' && !agg.enabled"
+      ng-click="agg.enabled = true"
+      aria-label="Enable aggregation"
+      tooltip="{{'Enable aggregation'|translate}}"
+      tooltip-append-to-body="true"
+      type="button"
+      class="btn btn-xs">
+      <i aria-hidden="true" class="fa fa-toggle-off"></i>
+    </button>
+
+    <!-- drag handle -->
+    <button
+      draggable-handle
+      aria-label="Modify Priority by Dragging"
+      ng-if="stats.count > 1"
+      tooltip="{{'Modify Priority by Dragging'|translate}}"
+      tooltip-append-to-body="true"
+      type="button"
+      class="btn btn-xs">
+      <i aria-hidden="true" class="fa fa-arrows-v"></i>
+    </button>
+
+    <!-- remove button -->
+    <button
+      ng-if="canRemove(agg)"
+      aria-label="Remove Dimension"
+      ng-if="stats.count > stats.min"
+      ng-click="remove(agg)"
+      tooltip="{{'Remove Dimension'|translate}}"
+      tooltip-append-to-body="true"
+      type="button"
+      class="btn btn-xs btn-danger">
+      <i aria-hidden="true" class="fa fa-times"></i>
+    </button>
+
+  </div>
+
+</div>
+
+<vis-editor-agg-params
+  agg="agg"
+  group-name="groupName"
+  ng-show="editorOpen"
+  class="vis-editor-agg-editor">
+</vis-editor-agg-params>
+
+<vis-editor-agg-add
+  ng-if="$index + 1 === stats.count"
+  ng-hide="dragging"
+  class="vis-editor-agg-add vis-editor-agg-add-subagg">
+</vis-editor-agg-add>

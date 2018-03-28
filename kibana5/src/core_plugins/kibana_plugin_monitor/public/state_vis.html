@@ -1,0 +1,18 @@
+<!--<div ng-controller="KbnStateVisController" class="metric-vis">-->
+<!--<div class="metric-container" ng-repeat="metric in metrics">-->
+<!--<div class="metric-value" ng-style="{'font-size': vis.params.fontSize+'pt'}">-->
+<!--{{metric.value}}-->
+<!--</div>-->
+<!--<div>{{metric.label}}</div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<div ng-controller="KbnStateVisController" class="metric-vis">
+  <div class="metric-container" ng-hide="!resp">
+    <div class="metric-value fa fa-exclamation-circle" ng-style="{'color': vis.params.color,'font-size':vis.params.fontSize+'px'}">
+
+    </div>
+    <div  ng-style="{'color': vis.params.color,'font-size':vis.params.fontSize/10+'px','font-weight':'bolder'}">{{vis.params.name}}</div>
+  </div>
+</div>

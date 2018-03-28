@@ -1,0 +1,111 @@
+
+<div class="app-container data-upload" ng-controller="alarmCtrl">
+  <div class="alarm-navbar-top" >
+    <div class="localTabs">
+      <span class="localTab" translate>告警</span>
+    </div>
+  </div>
+  <div role="main" class="settings-section-container">
+    <div class="panel panel-default data-panel alarm-panel">
+    <!--<div class="panel panel-default data-panel alarm-panel">-->
+      <div class="panel-body">
+        <button type="submit" class="btn btn-success" ng-click="newAlarmBuild()" translate>新建告警</button>
+      </div>
+      <div class="table-responsive tcpUdpTable">
+        <table class="table alarmTable">
+          <thead>
+          <tr class="active">
+            <td style="width:45px" translate>序号</td>
+            <td style="width:110px" translate>名称</td>
+            <td style="width:140px" translate>告警类型</td>
+            <td style="width:190px" translate>执行计划</td>
+            <td class="alarmNum" style="width: 270px">
+              <input type="number" min="1" class="form-control sel-input" ng-model="alarmNum"
+                     ng-change="alarmNumChange(alarmNum)" required/>
+              <select class="form-control sel-input" ng-model="alarmNumTime"
+                      ng-change="alarmNumTimeChange(alarmNumTime)"
+                      ng-options="item.id as item.value for item in alarmNumTimes">
+              </select>
+              <span translate>内告警次数</span>
+            </td>
+            <td style="width:100px" translate>当前状态</td>
+            <td style="width:160px" translate>操作</td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="alertItem in alertItems">
+            <td style="width:45px">{{alarmInfoStart+$index + 1}}</td>
+            <td style="width:110px">{{alertItem.name}}</td>
+            <td style="width:140px" translate>{{alertItem.monitor.alertType}}</td>
+            <td style="width:190px">
+              <span translate>From</span>{{alertItem.schedule.startDateTime}}<span translate>开始执行，每隔</span>{{alertItem.schedule.timeInterval}}<span translate>{{alertItem.schedule.timeUnit}}</span><span translate>执行一次</span>
+            </td>
+            <td style="width:270px">{{alertItem.alarmTimeRange}}</td>
+            <td style="width:100px">
+              <button
+                style="position: relative"
+                ng-click="alertStateChange(alertItem)"
+                class="btn ng-scope stateBtn stateBtnON"
+                ng-class="{1: 'btn-success', 0: ''}[alertItem.status]"
+                aria-label="Edit"
+                data-test-subj="onButton">
+                <span class="ng-scope" translate="">ON</span>
+                <!--  <i aria-hidden="true" class="fa fa-pause" tooltip="暂停"></i> -->
+              </button>
+              <button
+                style="position: relative"
+                ng-click="alertStateChange(alertItem)"
+                class="btn ng-scope stateBtn stateBtnOff"
+                ng-class="{0: ' btn-danger ', 1: ''}[alertItem.status]"
+                aria-label="Edit"
+                data-test-subj="offButton">
+                <span class="ng-scope" translate="">OFF</span>
+                <!--  <i aria-hidden="true" class="fa fa-play" tooltip="开始"></i> -->
+              </button>
+            </td>
+            <td style="width:160px">
+              <button
+                ng-click="newAlarmEdit($index)"
+                class="btn btn-default ng-scope"
+                aria-label="Edit"
+                data-test-subj="editButton">
+                <span class="sr-only ng-scope" translate="">Edit</span>
+                <i aria-hidden="true" class="fa fa-pencil"></i>
+              </button>
+              <ar-modal
+                modal-obj="modalObj"
+                ok="newAlarmClear($index)"
+                confirm-msg="{{'确定删除所选的告警任务？此操作无法撤销！'|translate}}"
+                ar-title = "{{'提示'|translate}}"
+              >
+              <button
+                class="btn btn-danger ng-scope"
+                aria-label="Clear"
+                data-test-subj="clearButton">
+                <span class="sr-only ng-scope" translate="">Clear</span>
+                <i aria-hidden="true" class="fa fa-trash-o"></i>
+              </button>
+              </ar-modal>
+
+              <button
+                tooltip="{{'查看告警记录'|translate}}"
+                ng-click="newAlarmCheck($index)"
+                class="btn btn-warning ng-scope"
+                aria-label="Clear"
+                data-test-subj="clearButton">
+                <span class="sr-only ng-scope" translate="">check</span>
+                <i aria-hidden="true" class="fa fa-bell-o"></i>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <tm-pagination conf="pageAlarm.indexConf"></tm-pagination>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+

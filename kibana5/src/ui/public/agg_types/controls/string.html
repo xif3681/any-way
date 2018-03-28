@@ -1,0 +1,15 @@
+<div class="form-group">
+  <div ng-if=aggParam.name>
+  	<label ng-if="$parent.$parent.agg.vis.type.icon==='fa-tachometer'">{{ "仪表盘图指标名称" | translate }}</label>
+  	<label ng-if="$parent.$parent.agg.vis.type.icon!=='fa-tachometer'">{{ aggParam.name | translate }}</label>
+  </div>
+  <div ng-if=label>
+  	<label>{{ label |translate}}</label>
+  </div>
+  <div ng-if="$parent.$parent.agg.vis.type.icon==='fa-tachometer'">
+    <input type="text" ng-model="agg.params[aggParam.name]" class="form-control" maxlength="18" placeholder={{"例如：销售额（单位：万)"|translate}}>
+  </div>
+  <div ng-if="$parent.$parent.agg.vis.type.icon!=='fa-tachometer'">
+    <input type="text" ng-model="agg.params[aggParam.name]" class="form-control" maxlength="18">
+  </div>
+</div>

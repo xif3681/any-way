@@ -1,0 +1,343 @@
+{
+	"auto":"自動",
+    "1s":"1秒鐘",
+    "1m":"1分鐘",
+    "1h":"1小時",
+    "1d":"1天",
+    "1w":"1周",
+    "1M":"1月",
+    "1y":"1年",
+    "other":"其他",
+
+
+	"saved sheets": "已存工作表",
+
+	"Save entire Timelion sheet": "保存整個時間序列表",
+
+	"You want this option if you mostly use Timelion expressions from within the Timelion app and don't need to add Timelion charts to Kibana dashboards. You may also want this if you make use of references to other panels.": "如果您在時間序列圖中大多使用的是Timelion運算式，並且不需要向儀錶盤添加時間序列圖，則需要此選項。如果您要使用對其他面板的引用，則可能還需要此選項。",
+	"Save sheet as": "將工作表另存為",
+
+	"Save current expression as Kibana dashboard panel": "將當前運算式保存為儀錶盤面板",
+
+	"Need to add a chart to a Kibana dashboard? We can do that! This option will save your currently selected expression as a panel that can be added to Kibana dashboards as you would add anything else. Note, if you use references to other panels you will need to remove the refences by copying the referenced expression directly into the expression you are saving. Click a chart to select a different expression to save.":
+	"您需要向儀錶盤添加圖表嗎？此選項可以將當前選定的運算式保存為面板，並將其添加到儀錶盤，就像您添加任何其他內容一樣。注意，如果您使用了對其他面板的引用，那麼直接將引用的運算式複製到要保存的運算式中即可刪除引用。按一下圖表以選擇要保存的不同運算式。",
+
+	"Currently selected expression": "當前選定的運算式",
+
+	"Save expression as": "將運算式另存為",
+
+	"Save": "保存",
+
+	"Columns": "列",
+
+	"Rows": "行",
+
+	"Column count must divide evenly into 12": "這是基於當前視窗寬度的最大列寬。",
+
+	"This is a target based on the current window height": "這是基於當前視窗高度的最大行高。",
+
+	"Argument Name": "參數名稱",
+
+	"Accepted Types": "接受的類型",
+
+	"Information": "信息",
+
+	"Function reference": "函數參考",
+
+	"New TimeLion Sheet": "新的時間序列表",
+
+	"Name this panel": "命名此面板",
+
+	"Name this sheet...": "命名此工作表...",
+
+	"Remove": "刪除",
+
+	"Drag to reorder": "拖動即可重新排序",
+
+	"Full screen": "全屏",
+
+	"Return the absolute value of each value in the series list": "返回序列表中每個值的絕對值",
+
+	"This function does not accept any arguments. Well that's simple, isn't it?": "此函數不接受任何參數。",
+
+	"Adds the values of one or more series in a seriesList to each position, in each series, of the input seriesList": "將序列表中的一個或多個序列的值添加到輸入序列表的每個序列中的每個位置",
+
+	"Number or series to sum with the input series. If passing a seriesList it must contain exactly 1 series.":
+    "與輸入序列相加的數位或序列。如果傳遞的是一個序列表，那麼它必須正好包含一個序列。",
+
+	"Show the seriesList as bars": "將序列表顯示為條形",
+
+	"Width of bars in pixels": "條形的寬度（以圖元為單位）",
+
+	"Should bars be stacked, true by default": "預設情況下堆疊條形",
+
+	"Change the color of the series": "更改序列的顏色",
+
+	"Color of series, as hex, eg #c6c6c6 is a lovely light grey. If you specify multiple colors, and have multiple series, you will get a gradient, eg \"#00B1CC:#00FF94:#FF3A39:#CC1A6F\"": "序列的顏色，使用十六進位顏色碼，例如＃c6c6c6表示淺灰色。 如果指定多種顏色，並且有多個序列，那麼您將得到一個漸變序列，例如\"＃00B1CC：＃00FF94：＃FF3A39：＃CC1A6F\"",
+
+	"Compares each point to a number, or the same point in another series using an operator, then sets its valueto the result if the condition proves true, with an optional else.":
+	"使用運算子將每個點與一個數字或另一個序列中的同一點進行比較，然後如果條件證明為true，則使用一個可選值將其值設置為結果。",
+
+	"Operator to use for comparison, valid operators are eq (equal), ne (not equal), lt (less than), lte (less than equal), gt (greater than), gte (greater than equal)":
+	"運算子用於比較，有效的運算子是eq（等於），ne（不等於），lt（小於），lte（小於等於），gt（大於），gte（大於等於）",
+
+	"The value to which the point will be compared. If you pass a seriesList here the first series will be used":
+	"該點將被比較的值。如果您傳遞的是一個序列表，那麼這裡將使用第一個序列",
+
+	"The value the point will be set to if the comparison is true. If you pass a seriesList here the first series will be used": "如果比較結果為true，則該點將被設置為該值。如果您傳遞的是一個序列表，那麼這裡將使用第一個序列",
+
+	"The value the point will be set to if the comparison is false. If you pass a seriesList here the first series will be used": "如果比較結果為false，則該點將被設置為該值。如果您傳遞的是一個序列表，那麼這裡將使用第一個序列",
+
+	"Return the cumulative sum of a series, starting at a base.": "返回一個序列從一個基數開始累加的和。",
+
+	"Number to start at. Basically just adds this to the beginning of the series": "開始的值。基本上只是將其添加到序列的開頭",
+
+	"Plot the change in values over time.": "繪製隨時間推移而變化的值。",
+
+	"Divides the values of one or more series in a seriesList to each position, in each series, of the input seriesList": "將序列表中的一個或多個序列的值除以輸入序列表的每個序列中的每個位置",
+
+	"Number or series to divide by. If passing a seriesList it must contain exactly 1 series.":
+	"要劃分的數字或序列。如果傳遞的是一個序列表，那麼它必須正好包含一個序列。",
+
+	"Pull data from an elasticsearch instance": "從Elasticsearch實例中拉取資料",
+
+	"Query in lucene query string syntax": "Lucene查詢字串語法中的查詢",
+
+	"An elasticsearch single value metric agg, eg avg, sum, min, max or cardinality, followed by a field. Eg \"sum:bytes\", or just \"count\"": "Elasticsearch單值度量聚合，例如均值，總和，最小值，最大值或基數聚合，後跟欄位。例如“總和：bytes ”，或者只是“計數”",
+
+	"An elasticsearch field to split the series on and a limit. Eg, \"hostname:10\" to get the top 10 hostnames":
+	"用於拆分序列的Elasticsearch欄位和限制。例如，“hostname:10 ”可以獲得前10個主機名稱",
+
+	"Index to query, wildcards accepted": "查詢的索引，接受萬用字元",
+
+	"Field of type \"date\" to use for x-axis": "用於x軸的類型為“日期型”的欄位",
+
+	"Respect filters on Kibana dashboards. Only has an effect when using on Kibana dashboards":
+	"關於AnyRobot儀錶盤中的篩檢程式。它只有在AnyRobot儀錶盤中使用時才有效果",
+
+	"**DO NOT USE THIS**. Its fun for debugging fit functions, but you really should use the interval picker":
+	"**請勿使用此選項**。雖然在調試擬合函數時很有趣，但是您還是應該使用時間間隔選擇器",
+
+	"The algorithm to use for fitting the series to the target. One of: average, carry, nearest, none, scale,": "用於將系列擬合到目標的演算法。均值、進位、鄰近、無、刻度中的其一",
+
+	"Offset the series retrieval by a date expression. Eg -1M to make events from one month ago appear as if they are happening now": "通過日期運算式設置序列檢索的偏移。例如，設置為-1M可以使一個月前的事件出現，好像他們現在正在發生一樣",
+
+	"Algorithm to use for fitting series to the target time span and interval. Available: average, carry, nearest, none, scale,": "用於將序列擬合到目標時間跨度和間隔的演算法。可用：average，carry，nearest，none，scale，",
+
+	"This is an internal function that simply returns the input seriesList. Don't use this":
+	"這是一個簡單地返回輸入序列表的內建函式。請勿使用此選項",
+
+	"Fills null values using a defined fit function": "使用定義的擬合函數來填充空值",
+
+
+	"[experimental] Pull data from graphite. Configure your graphite server in Kibana's Advanced Settings":
+	"從graphite中提取資料。在AnyRobot的高級設置中配置graphite伺服器",
+
+	"Graphite metric to pull, eg _test-data.users.*.data": " 要提取的Graphite指標，例如，_test-data.users.*.data",
+
+	"Hide the series by default": "預設情況下隱藏序列",
+
+	"Hide or unhide the series": "隱藏或取消隱藏序列",
+
+	"Sample the beginning of a series and use it to forecast what should happen via several optional parameters. In general, like everything, this is crappy at predicting the future. You're much better off using it to predict what should be happening right now, for the purpose of anomaly detection. Note that nulls will be filled with forecasted values. Deal with it.":
+	"對序列的開頭進行採樣，並通過幾個可選的參數來預測應該發生什麼。通常，任何事物在預測未來的時候都會很糟糕。出於檢測異常的目的，您最好使用它來預測現在應該發生什麼。注意，null將填充預測值。",
+
+	"Smoothing weight from 0 to 1. Increasing alpha will make the new series more closely follow the original. Lowering it will make the series smoother": "從0到1的平滑權重。增加alpha將使新序列更接近原來的序列。降低alpha將使序列更平滑",
+
+	"Trending weight from 0 to 1. Increasing beta will make rising/falling lines continue to rise/fall longer. Lowering it will make the function learn the new trend faster": "從0到1的趨勢權重。增加beta將使上升/下降線繼續上升/下降得更長。降低beta將使函數更快地學習新的趨勢",
+
+	"Seasonal weight from 0 to 1. Does your data look like a wave? Increasing this will give recent seasons more importance, thus changing the wave form faster. Lowering it will reduce the importance of new seasons, making history more important." :
+	"從0到1的季節性權重。您的資料是否看起來像波浪一樣？增加它將使最近的季節更重要，從而更快地改變波形。降低它將降低最近的季節的重要性，使之前的季節更重要。",
+
+	"How long is the season, eg, 1w if you pattern repeats weekly. (Only useful with gamma)":
+	"季節的長度，例如，如果每週重複波動模式，那麼長度為一周。（僅適用於gamma）",
+
+	"The number of seasons to sample before starting to \"predict\" in a seasonal series. (Only useful with gamma, Default: all)": "在季節性序列中開始“預測”之前抽樣的季節數。（僅適用於gamma，預設值：全部）",
+
+	"Change the label of the series. Use %s reference the existing label": "更改序列的標籤。使用％s來引用現有標籤",
+
+	"Legend value for series. You can use $1, $2, etc, in the string to match up with the regex capture groups":
+	"序列的圖例值。您可以在字串中使用$ 1，$ 2等匹配規則運算式捕獲組",
+
+	"A regex with capture group support": "支持帶捕獲組的規則運算式",
+
+	"Set the position and style of the legend on the plot": "在圖表上設置圖例的位置和樣式",
+
+	"Corner to place the legend in: nw, ne, se, or sw. You can also pass false to disable the legend":
+	"放置圖例的角落：nw，ne，se或sw。您也可以傳遞false以禁用圖例",
+
+	"Number of columns to divide the legend into": "將圖例分成幾列",
+
+	"Show the seriesList as lines": "以行顯示序列表",
+
+	"Line thickness": "行高",
+
+	"Number between 0 and 10. Use for making area charts": "0到10之間的數字。用於製作面積圖",
+
+	"Stack lines, often misleading. At least use some fill if you use this.":
+	"堆疊行經常容易令人誤解。如果您要使用它，請至少使用一些填充。",
+
+	"Show or hide lines": "顯示或隱藏行",
+
+	"Show line as step, eg, do not interpolate between points":
+	"將行顯示為級別，例如，不推算已知兩點中間的數值",
+
+	"Return the logarithm value of each value in the series list (default base: 10)":
+	"返回序列表中每個值的對數值（默認基數：10）",
+
+	"Set logarithmic base, 10 by default": "設置對數底數，預設值為10",
+
+	"Maximum values of one or more series in a seriesList to each position, in each series, of the input seriesList": "序列表中一個或多個序列的最大值到輸入序列表的每個序列中的每個位置",
+
+	"Sets the point to whichever is higher, the existing value, or the one passed. If passing a seriesList it must contain exactly 1 series.": "將點設置為較高值、現有值或傳遞的值。如果傳遞的是一個序列表，它必須正好包含一個序列。",
+
+	"Minimum values of one or more series in a seriesList to each position, in each series, of the input seriesList": "序列表中一個或多個序列的最小值到輸入序列表的每個序列中的每個位置",
+
+	"Sets the point to whichever is lower, the existing value, or the one passed. If passing a seriesList it must contain exactly 1 series.": "將點設置為較低值、現有值或傳遞的值。如果傳遞的是一個序列表，它必須正好包含一個序列。",
+
+	"Calculate the moving average over a given window. Nice for smoothing noisey series":
+	"計算給定視窗上的移動平均值。它能使嘈雜的時間序列變得平滑",
+
+	"Number of points to average over": "平均點數",
+
+	"Position of the averaged points relative to the result time. Options are left, right, and center (default).":
+	"平均點相對於結果時間的位置。選項為左邊，右邊和中間（默認）。",
+
+	"Calculate the moving standard deviation over a given window. Uses naive two-pass algorithm. Rounding errors may become more noticeable with very long series, or series with very large numbers.":
+	"計算給定視窗上的移動標準差。使用簡單的two-pass演算法。當序列非常長或具有非常大的數位時，舍入誤差可能使得偏差更加明顯。",
+
+	"Number of points to compute the standard deviation over": "計算標準差的點數",
+
+	"Multiply the values of one or more series in a seriesList to each position, in each series, of the input seriesList": "將序列表中的一個或多個序列的值乘以輸入序列表的每個序列中的每個位置",
+
+	"Number or series by which to multiply. If passing a seriesList it must contain exactly 1 series.":
+	"要乘以的數字或序列。如果傳遞的是一個序列表，它必須正好包含一個序列。",
+
+	"Calculate the moving average over a given window. Nice for smoothing noisey series":
+	"計算給定視窗上的移動平均值。它能使嘈雜的時間序列變得平滑",
+
+	"Number of points to average over": "平均點數",
+
+	"Position of the averaged points relative to the result time. Options are left, right, and center (default).":
+	"平均點相對於結果時間的位置。選項為左邊，右邊和中間（默認）。",
+
+	"Calculate the moving standard deviation over a given window. Uses naive two-pass algorithm. Rounding errors may become more noticeable with very long series, or series with very large numbers.":
+	"計算給定視窗上的移動標準差。使用簡單的two-pass演算法。當序列非常長或具有非常大的數位時，舍入誤差可能使得偏差更加明顯。",
+
+	"Number of points to compute the standard deviation over": "計算標準差的點數",
+
+	"Show the series as points": "將序列顯示為點",
+
+	"Size of points": "點的大小",
+
+	"Thickness of line around point": "點周圍的行高",
+
+	"Number between 0 and 10 representing opacity of fill": "0和10之間的數字，表示填充的不透明度",
+
+	"Color with which to fill point": "填充點的顏色",
+
+	"cross, circle, triangle, square or diamond": "十字，圓形，三角形，正方形或菱形",
+
+	"Show points or not": "顯示或隱藏點",
+
+	"number of digits to round the decimal portion of the value to": "將值的小數部分四捨五入的數位位元數",
+
+	"Number of digits to round each value to": "將每個值四捨五入的數字位元數",
+
+	"Use at your own risk, sets arbitrary properties on the series. For example .props(label=bears!)":
+	"您可以在序列上設置任意屬性，但必須自行承擔使用風險。例如，.props（label = bears！）",
+	"Set props on the seriesList vs on each series": "設置序列表相對於每個序列的屬性",
+
+	"[experimental] Pull data from quandl.com using the quandl code. Set \"timelion:quandl.key\" to your free API key in Kibana's Advanced Settings. The API has a really low rate limit without a key.":
+	"使用quandl代碼從quandl.com提取資料。在AnyRobot的高級設置中可以將“timelion：quandl.key”設置為您的免費API金鑰。如果API沒有金鑰，那麼速率限制將非常低。",
+
+	"The quandl code to plot. You can find these on quandl.com.": "要繪製的quandl代碼。您可以在quandl.com上找到它們。",
+
+	"Some quandl sources return multiple series, which one should I use? 1 based index.": "有些quandl源會返回多個序列，請使用以1為基礎的索引。",
+
+	"Changes the max and min of a series while keeping the same shape": "改變序列的最大值和最小值，同時保持形狀不變",
+
+	"New minimum value": "新的最小值",
+
+	"New maximum value": "新的最大值",
+
+	"Changes scales a value (usually a sum or a count) to a new interval. For example, as a per-second rate": "更改會將值（通常是總和或計數）縮放到新的時間間隔。例如，以每秒的速率",
+
+	"The new interval in date math notation, eg 1s for 1 second. 1m, 5m, 1M, 1w, 1y, etc.": "新的日期數學符號間隔，例如1s表示1秒，還有1m，5m，1M，1w，1y等。",
+
+	"Draws a single value across the chart": "在圖表上繪製單個值",
+
+	"The single value to to display, you can also pass several values and I will interpolate them evenly across your time range.": "要顯示的單個值，您還可以傳遞多個值，AnyRobot將在您的時間範圍內均勻地推算兩點間的數值。",
+
+	"A quick way to set the label for the series. You could also use the .label() function": "快速設置序列標籤的方法。您還可以使用.label（）函數",
+
+	"Subtract the values of one or more series in a seriesList to each position, in each series, of the input seriesList": "將序列表中的一個或多個序列的值減去輸入序列表的每個序列中的每個位置",
+
+	"Number or series to subtract from input. If passing a seriesList it must contain exactly 1 series.":
+	"從輸入中減去的數位或序列。如果傳遞的是一個序列表，它必須正好包含一個序列。",
+
+	"Adds a title to the top of the plot. If called on more than 1 seriesList the last call will be used.":
+	"在圖表的頂部添加標題。如果調用的序列表超過了1個，那麼將應用最後一個調用。",
+
+	"Title for the plot.": "圖表的標題",
+
+	"Draws a trend line using a specified regression algorithm": "使用指定的回歸演算法繪製趨勢線",
+
+	"The algorithm to use for generating the trend line. One of: linear, log": "用於生成趨勢線的演算法。線性或對數趨勢線中的其一",
+
+	"Where to start calculating from the beginning or end. For example -10 would start calculating 10 points from the end, +15 would start 15 points from the beginning. Default: 0":
+	"從開頭或結尾的哪裡開始計算。例如，-10表示從結尾處開始計算10個點，+ 15表示從開頭處開始計算15個點。預設值：0",
+
+	"Where to stop calculating from the beginning or end. For example -10 would stop calculating 10 points from the end, +15 would stop 15 points from the beginning. Default: 0":
+	"在距開頭或結尾的哪裡結束計算。例如-10表示距結尾10個點處停止計算，+ 15表示距開頭15個點處停止計算。預設值：0",
+
+	"Set N buckets at the start or end of a series to null to fit the \"partial bucket issue\"":
+	"將序列開頭或結尾處的N個值設置為null，以適應\"部分存儲桶的問題\"",
+
+	"Buckets to trim from the beginning of the series. Default: 1": "從序列開頭處移除空白桶。預設值: 1",
+
+	"Buckets to trim from the end of the series. Default: 1": "從序列結尾處移除空白桶。預設值：1",
+
+	"Draws a single value across the chart": "在圖表上繪製單個值",
+
+	"[experimental] Pull data from http://data.worldbank.org/ using path to series. The worldbank provides mostly yearly data, and often has no data for the current year. Try offset=-1y if you get no data for recent time ranges.":
+	"使用序列路徑從http://data.worldbank.org/拉取數據。世界銀行主要提供年度資料，而且往往沒有本年度的資料。如果您沒有獲取到最近的時間範圍內的資料，請嘗試設置offset=-1y。",
+
+	"Worldbank API path. This is usually everything after the domain, before the querystring. Eg: /en/countries/ind;chn/indicators/DPANUSSPF.":
+	"世界銀行的API路徑。它通常是在功能變數名稱之後、查詢字串之前的所有內容。例如：/en/countries/ind;chn/indicators/DPANUSSPF。",
+
+	"[experimental] Pull data from http://data.worldbank.org/ using the country name and indicator. The worldbank provides mostly yearly data, and often has no data for the current year. Try offset=-1y if you get no data for recent time ranges." :
+	"使用國家名稱和指示碼從http://data.worldbank.org/提取資料。世界銀行主要提供年度資料，而且往往沒有本年度的資料。如果您沒有獲取到最近的時間範圍內的資料，請嘗試設置offset=-1y。",
+
+	"Worldbank country identifier. Usually the country's 2 letter code": "世界銀行國家識別字。通常是指國家的2個字母代碼",
+
+	"The indicator code to use. You'll have to look this up on data.worldbank.org. Often pretty obtuse. Eg SP.POP.TOTL is population": "要使用的指示碼。您必須在data.worldbank.org上查找。這個過程通常相當繁瑣。例如SP.POP.TOTL指的是是人口",
+
+	"Configures a variety of y-axis options, the most important likely being the ability to add an Nth (eg 2nd) y-axis": "配置各種y軸選項，最重要的可能是添加第N（例如第二）個y軸的能力",
+
+	"The numbered y-axis to plot this series on, eg .yaxis(2) for a 2nd y-axis.": "在已編號的y軸上繪製該序列，例如y軸（2）指的是第二個y軸。",
+
+	"Min value": "最小值",
+
+	"Max value": "最大值",
+
+	"left or right": "左還是右",
+
+	"Label for axis": "軸標籤",
+
+	"Color of axis label": "軸標籤的顏色",
+
+	"Saved expression as": "已將運算式另存為",
+
+	"Saved sheet as": "已將工作表另存為",
+
+	"Max buckets exceeded:": "已超過最大值：",
+	"of" : " / ",
+	"allowed.": "是允許的。",
+	"Choose a larger interval or a shorter time span": "請增大時間間隔或縮短時間跨度。",
+	"more": "更多信息",
+	"less": "更少信息"
+
+
+
+}

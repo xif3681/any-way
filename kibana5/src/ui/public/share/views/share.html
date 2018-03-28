@@ -1,0 +1,195 @@
+<div class="share-dropdown">
+  <!-- Left panel -->
+  <div class="share-panel share-panel--left">
+    <!-- Title -->
+    <div
+      data-test-subj="shareUiTitle"
+      class="share-panel__title"
+    >
+      <span translate>Share saved</span>{{share.objectType|translate}}
+    </div>
+
+    <!-- Help text -->
+    <div ng-if="share.urls.original" class="share-panel-help-text">
+      <span translate>You can share this URL with people to let them load the most recent saved version of this</span><span>{{share.objectType|translate}}</span><span translate>objectType</span>
+
+    </div>
+
+    <div ng-if="!share.urls.original" class="share-panel-warning">
+      <span translate>Please save this</span>{{share.objectType|translate}}<span translate>to enable this sharing option.</span>
+    </div>
+
+    <div ng-if="share.urls.original">
+      <!-- iframe -->
+      <div class="share-panel-section" ng-if="share.allowEmbed">
+        <!-- Header -->
+        <div class="share-panel-header">
+          <div class="share-panel-header__label">
+            <span translate>Embedded iframe</span>
+          </div>
+          <div class="share-panel-header__actions">
+            <a
+              class="share-panel-header__action"
+              ng-click="share.copyToClipboard('#originalIframeUrl')"
+            >
+              <span translate>Copy</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Input -->
+        <input
+          id="originalIframeUrl"
+          class="share-panel-input"
+          type="text"
+          readonly
+          value="{{share.makeIframeTag(share.urls.original)}}"
+        />
+
+        <!-- Notes -->
+        <div class="share-panel-form-note">
+          <span translate>Add to your HTML source. Note that all clients must be able to access AnyRobot.</span>
+        </div>
+      </div>
+
+      <!-- Link -->
+      <div class="share-panel-section">
+        <!-- Header -->
+        <div class="share-panel-header">
+          <div class="share-panel-header__label">
+            <span translate>Link</span>
+          </div>
+          <div class="share-panel-header__actions">
+            <a
+              class="share-panel-header__action"
+              ng-click="share.copyToClipboard('#originalUrl')"
+            >
+              <span translate>Copy</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Input -->
+        <input
+          id="originalUrl"
+          class="share-panel-input"
+          type="text"
+          readonly
+          value="{{share.makeUrlEmbeddable(share.urls.original)}}"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Right panel -->
+  <div class="share-panel share-panel--right">
+    <!-- Title -->
+    <div class="share-panel__title">
+      <span translate>Share Snapshot</span>
+    </div>
+
+    <!-- Help text -->
+    <div class="share-panel-help-text">
+     <span translate>Snapshot URLs encode the current state of the</span>{{share.objectType|translate}}<span translate>in the URL itself. Edits to the saved</span>{{share.objectType|translate}}<span translate>won't be visible via this URL.</span>
+    </div>
+
+    <!-- iframe -->
+    <div class="share-panel-section" ng-if="share.allowEmbed">
+      <!-- Header -->
+      <div class="share-panel-header">
+        <div class="share-panel-header__label">
+          <span translate>Embedded iframe</span>
+        </div>
+        <div class="share-panel-header__actions">
+          <a
+            class="share-panel-header__action"
+            ng-if="!share.urlFlags.shortSnapshotIframe"
+            ng-click="share.toggleShortSnapshotIframeUrl()"
+          >
+            <span translate>Short URL</span>
+          </a>
+
+          <a
+            class="share-panel-header__action"
+            ng-if="share.urlFlags.shortSnapshotIframe"
+            ng-click="share.toggleShortSnapshotIframeUrl()"
+          >
+            <span translate>Long URL</span>
+          </a>
+
+          <a
+            class="share-panel-header__action"
+            ng-click="share.copyToClipboard('#snapshotIframeUrl')"
+          >
+            <span translate>Copy</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <input
+        id="snapshotIframeUrl"
+        class="share-panel-input"
+        type="text"
+        readonly
+        value="{{share.urlFlags.shortSnapshotIframe ? share.makeIframeTag(share.urls.shortSnapshotIframe) : share.makeIframeTag(share.urls.snapshot)}}"
+      />
+
+      <!-- Notes -->
+      <div class="share-panel-form-note">
+        <span translate>Add to your HTML source. Note that all clients must be able to access AnyRobot.</span>
+      </div>
+    </div>
+
+    <!-- Link -->
+    <div class="share-panel-section">
+      <!-- Header -->
+      <div class="share-panel-header">
+        <div class="share-panel-header__label">
+          <span translate>Link</span>
+        </div>
+        <div class="share-panel-header__actions">
+          <a
+            data-test-subj="sharedSnapshotShortUrlButton"
+            class="share-panel-header__action"
+            ng-if="!share.urlFlags.shortSnapshot"
+            ng-click="share.toggleShortSnapshotUrl()"
+          >
+            <span translate>Short URL</span>
+          </a>
+
+          <a
+            class="share-panel-header__action"
+            ng-if="share.urlFlags.shortSnapshot"
+            ng-click="share.toggleShortSnapshotUrl()"
+          >
+            <span translate>Long URL</span>
+          </a>
+
+          <a
+            data-test-subj="sharedSnapshotCopyButton"
+            class="share-panel-header__action"
+            ng-click="share.copyToClipboard('#snapshotUrl')"
+          >
+            <span translate>Copy</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <input
+        data-test-subj="sharedSnapshotUrl"
+        id="snapshotUrl"
+        class="share-panel-input"
+        type="text"
+        readonly
+        value="{{share.urlFlags.shortSnapshot ? share.makeUrlEmbeddableMe(share.urls.shortSnapshot) : share.makeUrlEmbeddableMe(share.urls.snapshot)}}"
+      />
+
+      <!-- Notes -->
+      <div class="share-panel-form-note">
+        <span translate>We recommend sharing shortened snapshot URLs for maximum compatibility. Internet Explorer has URL length restrictions, and some wiki and markup parsers don't do well with the full-length version of the snapshot URL, but the short URL should work great.</span>
+      </div>
+    </div>
+  </div>
+</div>

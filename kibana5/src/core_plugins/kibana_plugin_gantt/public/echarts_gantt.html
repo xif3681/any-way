@@ -1,0 +1,10 @@
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="echartsGantt" ng-controller="EchartsGanttController"
+     ng-if="vis.aggs[1].params.start_times||vis.aggs[1].params.end_times">
+</div>
+<div class="visualize-error chart error" ng-if="!vis.aggs[1].params.start_times && !vis.aggs[1].params.end_times">
+  <h4 translate>
+    甘特图需要添加X轴Y轴参数
+  </h4>
+</div>
+

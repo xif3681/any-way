@@ -1,0 +1,11 @@
+.input-color {
+  padding: 0;
+  margin: 0;
+  border: 1px solid #fff;
+  width: 25px;
+  height: 28px;
+  background-color: #fff;
+}
+.arr-input-error {
+  border-color: #E74C3C !important;
+}

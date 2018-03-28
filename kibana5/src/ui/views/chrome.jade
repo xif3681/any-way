@@ -1,0 +1,27 @@
+-
+  var appName = 'kibana';
+
+block vars
+
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    meta(name='viewport', content='width=device-width')
+    title 爱数 AnyRobot
+    block head
+  body(kbn-chrome, id='#{appName}-body')
+    kbn-initial-state(data=JSON.stringify(kibanaPayload))
+    block content
+script.
+    var lang = 'zh-cn';
+    if (window.localStorage) {
+      lang = window.localStorage.lang;
+    }
+    if (lang == 'zh-tw') {
+      document.title = "愛數 AnyRobot";
+    } else if (lang == 'en-us') {
+      document.title = "Eisoo AnyRobot";
+    }
+

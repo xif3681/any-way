@@ -1,0 +1,52 @@
+<div ng-controller="EchartsGaugeEditController">
+  <div class="form-group">
+    <label translate>仪表盘显示模式</label>
+    <select class="form-control" ng-model="vis.params.scale">
+      <option label={{"原值"|translate}} value="original" translate>原值</option>
+      <option label={{"百分比"|translate}}  value="percent" translate>百分比</option>
+    </select>
+  </div>
+  <label translate>仪表盘刻度范围</label>
+  <div class="form-group">
+    <label translate>刻度范围最小值</label>
+    <input type="number" ng-model="vis.params.minGauge" class="form-control arr-{{vis.params.inputErrMin}}" required/>
+  </div>
+  <div class="form-group">
+    <label translate>刻度范围最大值</label>
+    <input type="number" ng-model="vis.params.maxGauge" class="form-control arr-{{vis.params.inputErrMax}}" required/>
+  </div>
+  <table class="vis-editor-agg-editor-ranges form-group">
+    <tr>
+      <th>
+        <label translate>From</label>
+      </th>
+      <th colspan="2">
+        <label translate>To</label>
+      </th>
+    </tr>
+    <tr>
+      <label translate>仪表盘刻度范围划分</label>
+      </br>
+      <label translate>划分阶段数量</label>
+      <select class="form-control" ng-model="vis.params.range" ng-change="changeRanges()">
+        <option value='{{x}}' ng-repeat="x in vis.params.ranges">{{x}}</option>
+      </select>
+    </tr>
+    <tr ng-repeat="range in vis.params.fromToRanges">
+      <td>
+        <input ng-model="range.from" type="number" class="form-control" name="range.from" step="any" disabled required/>
+      </td>
+      <td>
+        <input ng-model="range.to" type="number" class="form-control arr-{{range.inputerr}}" name="range.to" step="any"
+               ng-disabled="range.disabled" required/>
+      </td>
+      <td>
+        <input type="color" ng-model="range.color" class="input-color"/>
+      </td>
+    </tr>
+  </table>
+  <div class="form-group">
+    <label><span translate>仪表盘刻度范围</span> - {{vis.params.angle}}<span translate>度</span></label>
+    <input type="range" ng-model="vis.params.angle" class="form-control" min="0" max="360">
+  </div>
+</div>

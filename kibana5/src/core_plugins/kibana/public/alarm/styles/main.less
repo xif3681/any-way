@@ -1,0 +1,519 @@
+@import (reference) "~ui/styles/theme";
+@import (reference) "~ui/styles/variables";
+.alarm-navbar-top {
+    padding-bottom: 0;padding-left: 10px;
+    padding-right: 0px;
+    background-color: #ecf0f1;
+    height: 38px;
+    //position: fixed;
+    //width: 100%;
+}
+.panel-default > .panel-heading {
+  color: #2d2d2d;
+  background-color: #fff;
+  border-color: #dddddd;
+}
+.tip-block {
+  background-color: #cc3333;
+  display: inline-block;
+  width: 4px;
+  height: 18px;
+  border-radius: 2px;
+  margin-right: 10px;
+}
+.tipAlarm {
+  display: flex;
+  margin-left: 30px;
+  align-items: flex-end;
+  height: 50px;
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 5px;
+}
+
+
+//.application {
+//  background-color: rgb(235,235,235);
+//}
+.panel.panel-default.data-panel.alarm-panel,.new-Alarm .panel.panel-default.panel-new-alarm,.panel.panel-default.panel-tcpudp.alarmRecord {
+  margin: 20px;
+}
+.new-Alarm .panel.panel-default.panel-new-alarm {
+  border-radius: 3px;
+  margin-top:20px;
+}
+.input-invalid {
+  border-color: #e74c3c !important;
+}
+.text-ellipsis {
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+
+.eventCount .field-name.exist-file {
+  width: 13em;
+}
+//分页的样式
+.no-items {
+  text-align: center;
+}
+.page-list .pagination {
+  float: right;
+}
+
+.pagination > .active > span {
+  font-weight: bold;
+
+}
+
+.page-list .pagination span {
+  cursor: pointer;
+}
+
+.page-list .pagination .separate span {
+  cursor: default;
+  border-top: none;
+  border-bottom: none;
+}
+
+.page-list .pagination .separate span:hover {
+  background: none;
+}
+
+.page-list .page-total {
+  float: right;
+  margin: 24px 20px;
+}
+
+.page-list .page-total input, .page-list .page-total select {
+  height: 20px;
+  border: 1px solid #ddd;
+}
+
+.page-list .page-total input {
+  width: 40px;
+  padding-left: 3px;
+}
+
+.page-list .page-total select {
+  width: 50px;
+}
+
+@media screen and (min-width: 768px) {
+  .alarm-record-table,.alarmTable {
+    table-layout: fixed;
+    word-wrap: break-word;
+    td {
+      word-wrap: break-word;
+    }
+  }
+}
+
+textarea.form-control.description {
+  text-align: left;
+}
+
+.returnBtn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.stateBtn {
+  font-size: 12px;
+  padding: 5px 6px;
+  color: #fff;
+}
+
+.stateBtn:focus {
+  outline: 5px auto rgba(255, 255, 255, 0);
+}
+
+.stateBtnON {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  postion: relative;
+  left: 2px;
+}
+
+.stateBtnOff {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  postion: relative;
+  right: 2px;
+}
+
+//火狐关于table-responsive兼容性
+@-moz-document url-prefix() {
+  fieldset {
+    display: table-cell;
+  }
+}
+
+.filter {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  font-size: 12px;
+  background-color: #569f76;
+  color: #ffffff;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  max-width: 100%;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.filter.negate {
+  background-color: #c6675d;
+}
+
+.settings-section-container {
+
+
+  //padding-top: 30px;
+  //height: 100%;
+  //display: block;
+}
+.panel-new-alarm .form-control.searchDetails, .settings-section-container .form-control.searchDetails {
+  text-align: left;
+  height: 100%;
+}
+
+.new-Alarm .panel-new-alarm .control-label.hint {
+  text-align: left;
+}
+
+.sizeBold {
+  font-weight: bold;
+}
+
+.sizeNormal {
+  font-weight: normal;
+}
+
+.fr {
+  float: right;
+}
+
+.fl {
+  float: left;
+}
+
+.fn {
+  float: none;
+}
+
+.inlb {
+  display: inline-block;
+  margin-top: 7px
+}
+.ptop{position: relative;
+  top: 6px;}
+
+.inlbock {
+  display: inline-block;
+}
+
+.textR {
+  text-align: right;
+}
+
+.marTop {
+  margin-top: 20px
+}
+
+.marLeft {
+  margin-left: 15px
+}
+
+.marLeftMin {
+  margin-left: 12px
+}
+
+//.alarmNum .form-control,.eventCount .form-control {
+//  //border-width: 0;
+//  height: 25px;
+//  padding: 0px 0px;
+//  display: inline-block;width: 24px;
+//}
+//.alarmNum .form-control,.eventCount .form-control .selWidth {
+//  width: 50px;
+//}
+
+.trigger-condition {
+  .radio-inline {
+    .radioStyle {
+      margin: 2px 0 0 -20px;
+    }
+  }
+}
+
+.alarmNum, .eventCount, .executionPlan {
+
+  .sel-input {
+    height: 25px;
+    padding: 0;
+    padding-left: 5px;
+    display: inline-block;
+    width: 6em;
+  }
+  .field-name {
+    height: 25px;
+    padding: 0px 3px;
+    display: inline-block;
+    width: 5.5em;
+  }
+}
+
+a.text-danger, a.text-danger:hover {
+  color: #e74c3c;
+}
+
+.alarm-navbar {
+  display: block;
+  height: 70px;
+  background-color: rgb(255, 255, 255);
+}
+
+.data-panel.alarm-panel,.alarmRecord {
+  border-radius: 3px;
+  padding: 0 20px 15px;
+  //margin: 25px auto;
+  .panel-body {
+    padding: 15px 0;
+  }
+  td {
+    text-align: center;
+  }
+  .alarm-record-table {
+    td {
+      text-align: center;
+    }
+  }
+}
+
+.data-nav {
+  ul {
+    li.sidebar-item-title.active {
+      color: #444444;
+      background-color: #dde4e6;
+    }
+    li {
+      padding: 10px 15px;
+      a {
+        display: inline-block;
+        width: 100%;
+        padding: 10px 15px;
+      }
+    }
+  }
+
+}
+
+.tcpUdpTable {
+  table {
+    thead {
+      font-weight: bold;
+
+      tr {
+        td {
+          vertical-align: middle;
+        }
+      }
+
+    }
+    tbody {
+
+      tr {
+        td {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
+
+.new-Alarm {
+  .panel-new-alarm {
+    margin: 25px auto;
+    padding: 25px 0;
+    .control-label {
+      text-align: right;
+    }
+  }
+
+}
+
+.alarmRecord {
+  margin: 25px auto;
+  padding: 0;
+}
+
+//, .data-input-rule-setting {
+//  .settings-section-container {
+//    .section-setting {
+//      //width: inherit;
+//    }
+//  }
+.newSetSaveSuccess {
+  margin: 70px 25px;
+}
+
+//  navbar {
+//    font-size: 13px;
+//    font-weight: bold;
+//  }
+//  .panel-tcpudp {
+//    //width: 80%;
+//    padding: 0;
+//    border-radius: 3px;
+//    margin: 25px auto;
+//
+//    .form-group {
+//      margin-top: 15px;
+//      #tcpRadio, #udpRadio {
+//        margin: 2px 0 0 -20px;
+//      }
+//
+//    }
+//  }
+//
+//  .panel-tcpudp-button {
+//    //width: 80%;
+//    margin: 75px auto;
+//  }
+//
+//  .log-structured {
+//    margin-top: 50px;
+//  }
+//  .data-source, .log-structured {
+//    font-weight: bold;
+//  }
+//
+//  label {
+//    font-weight: normal;
+//  }
+//
+//}
+
+.new-pagination > .pagination > li > a {
+  border-color: #ddd;
+}
+
+.new-pagination > .pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
+  color: #1f6b7a;
+  background-color: #eee;
+  border-color: #ddd;
+}
+
+.new-pagination {
+  text-align: center;
+  margin-top: 25px;
+  li.active {
+    a {
+      background-color: #cfd9db;
+    }
+
+  }
+}
+
+.data-input-rule-setting {
+  #apply {
+    float: right;
+  }
+  .rule-setting-form {
+    //label {
+    //  font-weight: bold;
+    //}
+    .ruleDetails {
+      fieldset {
+        margin: 0 2px;
+        control-label
+        legend {
+          padding: .5em;
+          border: 0;
+          width: auto;
+          font-size: inherit;
+          margin-bottom: 0;
+        }
+      }
+
+    }
+  }
+
+  .collapsible-sidebar .sidebar-collapser {
+    left: -24px;
+  }
+  .log-sample-content {
+    display: table;
+    width: 100%;
+    p {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+    }
+  }
+  .log-sample, .rule-setting, .log-sample-all {
+    font-weight: bold;
+  }
+  .panel-heading {
+    overflow: hidden;
+    zoom: 1;
+  }
+  //zoom: 1; 是在处理兼容性问题
+  .control-label {
+    text-align: right;
+  }
+  .log-sample-all {
+    span:nth-child(1) {
+      float: left;
+    }
+    .allLogSample {
+      float: left;
+      #allLogSample, #matchLogSample, #noMatchLogSample {
+        margin: 2px 0 0 -20px;
+      }
+
+      div {
+        margin: 0 0 0 25px;
+        float: left;
+      }
+    }
+    .page-list {
+      float: right;
+
+      .pagination {
+        margin: 0;
+        height: 10px;
+        font-size: 10px;
+        .first, .last {
+          span {
+            margin-top: -2px;
+          }
+        }
+        li {
+          span {
+            padding: 0px 15px;
+          }
+        }
+      }
+    }
+  }
+
+  .logSampleAllTable table tbody {
+    tr td {
+      vertical-align: middle;
+      padding-left: 40px;
+    }
+    //tr:nth-of-type(even) {
+    //  background-color: #f9f9f9;
+    //}
+    //tr:nth-of-type(odd) {
+    //  background-color: #ffffff;
+    //}
+  }
+
+}
+
+.panel-new-alarm textarea.form-control {
+  border-width: 2px;
+  text-align: left;
+}

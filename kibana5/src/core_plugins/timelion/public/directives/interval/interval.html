@@ -1,0 +1,9 @@
+<input input-focus ng-show="interval === 'other'||interval === '其他'"
+  class="form-control timelion-interval" style="padding-left: 2px; padding-right: 2px;"
+  ng-model="otherInterval">
+
+<select class="form-control timelion-interval"
+        style="border:1px solid #bdbdbd"
+  ng-options="i for i in intervalOptions"
+
+  ng-model="interval"></select>

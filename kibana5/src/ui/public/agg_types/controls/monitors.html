@@ -1,0 +1,99 @@
+<div class="form-group">
+  <label translate>名称</label>
+  <table style="width:100%" class="vis-editor-agg-editor-ranges form-group">
+    <tr>
+      <td>
+        <input type="text" ng-model="agg.params.name" class="form-control" required maxlength="18"/>
+      </td>
+      <td>
+        <input type="color" ng-model="agg.params.color" class="input-color" />
+      </td>
+    </tr>
+  </table>
+  <div ng-repeat="monitor in agg.params.monitors">
+    <div class="vis-editor-agg-header">
+      <label>
+        <span translate>触发条件</span> {{$index + 1}}
+      </label>
+      <div class="btn-group">
+        <button
+          type="button"
+          ng-click="agg.params.monitors.splice($index, 1)"
+          class="btn btn-danger btn-xs">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label translate>类型</label>
+      <select class="form-control" ng-model="agg.params.type" required>
+        <option label="{{'计数'|translate}}" value="count" selected translate>计数</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <table style="width: 100%">
+        <tr>
+          <th colspan="2" translate>字段名</th>
+          <th colspan="1" translate>值</th>
+        </tr>
+        <tr>
+          <td style="width: 26%">
+            <select class="form-control no_pad_lr"
+                    ng-model="monitor.fieldName"
+                    title={{monitor.fieldName}}
+                    ng-options="field for field in agg.params.fieldNames"
+                    required>
+            </select>
+          </td>
+          <td style="width: 9%" translate>
+            为
+          </td>
+          <td style="width: 69%">
+            <input type="text" class="form-control" ng-model="monitor.fieldValue" required/>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="form-group">
+      <span style="width: 34px" translate>计数</span>
+      <select style="width: 71px" class="form-control inlb no_pad_lr"
+              ng-options="item.id as item.value for item in agg.params.intervals"
+              ng-model="monitor.interval"
+              required>
+      </select>
+      <input style="width: 209px;padding-top: 9px;" ng-if="monitor.interval<=3"
+             ng-model="monitor.threshold" type="number" min="0"
+             ng-pattern="/^(0|[1-9]\d*)$/"
+             class="form-control inlb" required/>
+      <input style="width: 95px;padding-top: 9px;"
+             ng-if="monitor.interval>3"
+             ng-pattern="/^(0|[1-9]\d*)$/"
+             ng-model="monitor.threshold" type="number" min="0"
+             ng-class="{true: 'err_input', false: ''}[monitor.threshold >= monitor.upperThreshold]"
+             class="form-control inlb" required/>
+      <span style="width: 23px" ng-if="monitor.interval>3" translate>和</span>
+      <input style="width: 95px;padding-top: 9px;"
+             ng-model="monitor.upperThreshold" type="number" min="0"
+             ng-if="monitor.interval>3"
+             ng-pattern="/^(0|[1-9]\d*)$/"
+             ng-class="{true: 'err_input', false: ''}[monitor.threshold >= monitor.upperThreshold]"
+             class="form-control inlb" required/>
+    </div>
+  </div>
+</div>
+
+<input ng-model="agg.params.monitors.length" name="monitorLength" required min="1" type="number" class="ng-hide"/>
+<div class="hintbox" ng-show="aggForm.monitorLength.$invalid">
+  <p>
+    <i class="fa fa-danger text-danger"></i>
+    <strong translate>Required:</strong> <span translate>您必须指定至少一个触发条件。</span>
+  </p>
+</div>
+
+<div
+  click-focus="'filter'+(agg.params.monitors.length-1)"
+  ng-click="agg.params.monitors.push({interval: '',fieldName: '',})"
+  class="sidebar-item-button primary">
+  <span translate>添加触发条件</span>
+</div>
+<div style="height: 3px;width: 100%"></div>

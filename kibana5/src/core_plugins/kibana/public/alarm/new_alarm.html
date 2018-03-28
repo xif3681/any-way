@@ -1,0 +1,329 @@
+<div class="app-container new-Alarm" ng-controller="newAlarm">
+  <div class="alarm-navbar-top">
+    <div class="localTabs">
+      <span  class="localTab" >
+        <span translate>{{alarmTypeName}}</span><span translate >告警</span>
+      </span>
+    </div>
+  </div>
+  <div role="main">
+    <form role="form" class="form-horizontal" name="newAlarmForm" ng-submit="saveRuleAlarm()">
+      <div class="form-horizontal panel panel-default panel-new-alarm">
+      <!--<div class="form-horizontal panel-default panel-new-alarm">-->
+        <div class="form-group">
+          <label class="col-md-2 control-label sizeNormal" translate>名称</label>
+          <div class="col-md-4">
+            <input type="text" name="alarmName" class="form-control" placeholder="{{'请设置告警名称'|translate}}" ng-model="data.name"
+                   required oninvalid="setCustomValidity('请输入用户名！');" oninput="setCustomValidity('');">
+          </div>
+          <div class="text-danger" ng-show="newAlarmForm.alarmName.$dirty && newAlarmForm.alarmName.$invalid">
+            <label ng-show="newAlarmForm.alarmName.$error.required" class="col-md-6 control-label sizeNormal hint inlb" translate>请务必填写告警名称</label>
+
+          </div>
+          <div class="text-danger">
+            <label ng-show="errorAlarmName" class="col-md-2 control-label sizeNormal hint inlb" translate>告警名称不能超过255字符</label>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label sizeNormal" translate>已存搜索</label>
+          <div class="col-md-4">
+            <select class="form-control" ng-model="data.search.selectedSearch"
+                    ng-change="selectedExistSearchChange(data.search.selectedSearch)"
+                    ng-click="checkAlreadySearch()" name="existSearch"
+                    ng-options="item._id as item.value for item in selectedExistSearch"
+                    required>
+              <option value="" translate>——请选择已存搜索——</option>
+            </select>
+
+          </div>
+          <div class="text-danger" ng-show="newAlarmForm.existSearch.$dirty && newAlarmForm.existSearch.$invalid">
+            <label ng-show="newAlarmForm.existSearch.$error.required" class="col-md-3 control-label sizeNormal hint inlb" translate>必须选择一条已存搜索</label>
+
+          </div>
+          <div class="text-danger">
+            <label ng-show="data.monitorSearchError"
+                   class="col-md-3 control-label sizeNormal hint inlb" translate>已存搜索已被删除，请重新选择</label>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label sizeNormal" translate>搜索详情</label>
+          <div class="col-md-8">
+            <div class="form-control searchDetails" ng-if="selectedSearch.length!=0" ng-if="selectedSearch == undefined"
+                 disabled>
+              <div><span translate>搜索语句</span>:{{data.search.searchDetails}}</div>
+              <div><span translate>字段过滤</span>:
+                <div class="filter ng-scope" ng-class="{ negate: filter.meta.negate}"
+                     ng-repeat="filter in data.search.filterTypes" ng-if="!filter.meta.disabled">
+                  <div class="filter-description">
+                    <span ng-if="!filter.meta.alias" class="ng-binding ng-scope">{{filter.meta.key}}:</span>
+                    <span ng-if="!filter.meta.alias" class="ng-binding ng-scope">"{{filter.meta.value}}"</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label sizeNormal" translate>告警类型</label>
+          <div class="col-md-4">
+            <select class="form-control" ng-model="alarmType" ng-change="alarmTypeChange(alarmType)"
+                    ng-options="item.id as item.value for item in alarmTypes" required>
+            </select>
+          </div>
+          <span class="inlb">
+              <i aria-label={{alarmPrompt}} tooltip={{alarmPrompt|translate}} tooltip-placement="top"
+                 class="fa fa-info-circle"></i>
+          </span>
+        </div>
+        <div ng-switch="alarmType">
+          <!--计数告警-->
+          <div ng-switch-when="1" class="form-group trigger-condition">
+            <label class="col-md-2 control-label sizeNormal" translate>触发条件</label>
+            <div class="col-md-4">
+              <label class="radio-inline">
+                <input class="radioStyle" type="radio" name="trigger" id="event"
+                       ng-click="triggerChangeEvent()" required ng-model="data.monitor.alertType" value="eventCount">
+                <span translate>事件计数</span>
+              </label>
+              <label class="radio-inline">
+                <input class="radioStyle" type="radio" name="trigger" id="field" ng-model="data.monitor.alertType"
+                       value="fieldCount"
+                       ng-click="triggerChangeField()" required> <span translate>字段计数</span>
+              </label>
+            </div>
+          </div>
+          <!--计数告警-->
+          <div ng-switch-when="1" class="form-group eventCount">
+            <!--事件计数-->
+            <div class="col-md-offset-2 col-md-10" ng-if="data.triggerChangesEvent">
+              <!--<span class="fl inlb" translate>事件计数</span>-->
+              <!--<span class="fl inlb" translate>&nbsp&nbsp在</span>-->
+              <span class="fl inlb" translate>事件计数  在</span>
+              <input type="text" class="sel-input form-control col-md-1" name="number1" ng-class="{true:timeRangeInvalid,false:''}[newAlarmForm.number1.$dirty]"
+                     ng-model="data.monitor.timeRange" required>
+
+              <select class="sel-input form-control col-md-1 " ng-model="data.monitor.timeUnit"
+                      ng-change="triggerTimeUnitChange(data.monitor.timeUnit)"
+                      ng-options="item.enValue as item.value for item in triggerTimeUnits" required>
+              </select>
+              <span class="fl inlb" translate>之内  计数</span>
+              <select class="form-control col-md-1 field-name" ng-model="interval" ng-change="intervalChange(interval)"
+                      ng-options="item.id as item.value for item in intervals" required>
+              </select>
+              <input type="text" class="form-control col-md-1 sel-input text-ellipsis" placeholder="{{'阈值'|translate}}" required
+                     title={{data.condition.threshold}}  ng-model="data.condition.threshold" name="number2" ng-class="{true:thresholdInvalid,false:''}[newAlarmForm.number2.$dirty]">
+              <span class="fl inlb" ng-if="interval>3" translate>和</span>
+              <input type="text" class="form-control col-md-1 sel-input text-ellipsis" placeholder="{{'阈值'|translate}}" ng-if="interval>3"
+                     required title={{data.condition.upperThreshold}} ng-class="{true:upperThresholdInvalid,false:''}[newAlarmForm.number3.$dirty]"
+                     name="number3" ng-model="data.condition.upperThreshold">
+              <span class="text-danger  inlbock" ng-if="newAlarmForm.number1.$dirty||newAlarmForm.number2.$dirty||newAlarmForm.number3.$dirty">
+              <span
+                class="marLeft inlb sizeNormal hint">{{data.triggerCondition|translate}}</span>
+              </span>
+            </div>
+            <!--字段计数-->
+            <div class="col-md-offset-2 col-md-10" ng-if="data.triggerChangesField">
+              <span class="fl inlb" translate>字段</span>
+              <select class="form-control col-md-1 field-name exist-file"
+                      title={{data.monitor.field}}
+                      ng-model="data.monitor.field"
+                      ng-change="selectedExistFileAlarmChange(data.monitor.field)"
+                      name="fileAlarm"
+                      ng-options="item for item in selectedExistFileAlarm| orderBy:item"
+                      required>
+                <option value="" translate>——请选择字段名称——</option>
+              </select>
+              <span class="fl inlb" translate>&nbsp&nbsp在</span>
+              <input type="text" class="sel-input form-control col-md-1" name="number11" ng-class="{true:timeRangeInvalid,false:''}[newAlarmForm.number11.$dirty]"
+                     ng-model="data.monitor.timeRange" required>
+
+              <select class="sel-input form-control col-md-1 " ng-model="data.monitor.timeUnit"
+                      ng-change="triggerTimeUnitChange(data.monitor.timeUnit)"
+                      ng-options="item.enValue as item.value for item in triggerTimeUnits" required>
+              </select>
+              <span class="fl inlb" translate>之内  计数</span>
+              <select class="form-control col-md-1 field-name" ng-model="interval" ng-change="intervalChange(interval)"
+                      ng-options="item.id as item.value for item in intervals" required>
+              </select>
+              <input type="text" class="form-control col-md-1 sel-input text-ellipsis" placeholder="{{'阈值'|translate}}" required
+                     title={{data.condition.threshold}}  ng-model="data.condition.threshold" name="number12" ng-class="{true:thresholdInvalid,false:''}[newAlarmForm.number12.$dirty]">
+              <span class="fl inlb" ng-if="interval>3" translate>和</span>
+              <input type="text" class="form-control col-md-1 sel-input text-ellipsis" placeholder="{{'阈值'|translate}}" ng-if="interval>3"
+                     required title={{data.condition.upperThreshold}} ng-class="{true:upperThresholdInvalid,false:''}[newAlarmForm.number13.$dirty]"
+                     name="number13" ng-model="data.condition.upperThreshold">
+              <span class="text-danger  inlbock" ng-if="newAlarmForm.number11.$dirty||newAlarmForm.number12.$dirty||newAlarmForm.number13.$dirty">
+              <span
+                class="marLeft inlb sizeNormal hint">{{data.triggerCondition|translate}}</span>
+              </span>
+            </div>
+          </div>
+          <!--数值字段计算告警-->
+          <div ng-switch-when="2" class="form-group eventCount">
+            <label class="col-md-2 control-label sizeNormal" translate>触发条件</label>
+            <div class="col-md-10">
+              <span class="fl inlb" translate>字段</span>
+              <select class="form-control col-md-1 field-name exist-file"
+                      title={{data.monitor.field}}
+                      ng-model="data.monitor.field"
+                      ng-change="selectedExistNumAlertFileChange(data.monitor.field)"
+                      name="numAlertFile"
+                      ng-options="item for item in selectedExistNumAlertFile| orderBy:item"
+                      required>
+                <option value="" translate>——请选择字段名称——</option>
+              </select>
+              <span class="fl inlb" translate>&nbsp&nbsp在</span>
+              <input type="text" class="sel-input form-control col-md-1" ng-model="data.monitor.timeRange"
+                     ng-class="{true:timeRangeInvalid,false:''}[newAlarmForm.number4.$dirty]"
+                     name="number4" required>
+              <select class="sel-input form-control col-md-1 " ng-model="data.monitor.timeUnit"
+                      ng-change="triggerTimeUnitChange(data.monitor.timeUnit)"
+                      ng-options="item.enValue as item.value for item in triggerTimeUnits" required>
+              </select>
+              <span class="fl inlb" translate>之内&nbsp&nbsp</span>
+              <select class="form-control col-md-1 field-name" ng-model="data.monitor.calculate"
+                      ng-change="numberChange(data.monitor.calculate)"
+                      ng-options="item.enValue as item.value for item in numbers" required>
+              </select>
+              <select class="form-control col-md-1 field-name" ng-model="interval" ng-change="intervalChange(interval)"
+                      ng-options="item.id as item.value for item in intervals" required>
+              </select>
+              <input type="text" name="number5" class="form-control col-md-1 sel-input text-ellipsis" placeholder="{{'阈值'|translate}}"
+                     ng-model="data.condition.threshold" title={{data.condition.threshold}} required ng-class="{true:thresholdInvalid,false:''}[newAlarmForm.number5.$dirty]"/>
+              <span class="fl inlb" ng-if="interval>3" translate>和</span>
+              <input type="text" name="number6" class="form-control col-md-1 sel-input text-ellipsis" placeholder="{{'阈值'|translate}}"
+                     ng-if="interval>3" ng-class="{true:upperThresholdInvalid,false:''}[newAlarmForm.number6.$dirty]" ng-model="data.condition.upperThreshold" title={{data.condition.upperThreshold}} required/>
+
+              <span class="text-danger  inlbock" ng-if="newAlarmForm.number4.$dirty||newAlarmForm.number5.$dirty||newAlarmForm.number6.$dirty">
+              <span
+              class="marLeft inlb sizeNormal hint">{{data.triggerCondition|translate}}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <!--执行计划-->
+        <div class="form-group">
+          <label class="col-md-2 control-label sizeNormal" translate>执行计划</label>
+          <div class="col-md-4">
+            <select class="form-control" ng-model="data.schedule.type"
+                    ng-change="executionPlanChange(data.schedule.type)"
+                    ng-options="item.enValue as item.value for item in executionPlans" required>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-offset-2 col-md-4 form-inline">
+            <span translate>起始时间</span> <input class="form-control laydate-icon-me" def-laydate type="text" id="startDateTime"
+                        ng-model="data.schedule.startDateTime" required/>
+          </div>
+        </div>
+        <div class="form-group executionPlan">
+          <div class="col-md-offset-2 col-md-10">
+            <span class="fl inlb" translate>每隔</span>
+            <input type="number" min="1" class="sel-input form-control col-md-1 sel-input"
+                   ng-model="data.schedule.timeInterval"
+                   required
+                   name="number7" ng-value="5">
+            <select class="sel-input form-control col-md-1 sel-input" ng-model="data.schedule.timeUnit"
+                    ng-change="executeTimeUnitChange(data.schedule.timeUnit)"
+                    ng-options="item.enValue as item.value for item in executeTimeUnits" required>
+            </select>
+            <span class="fl inlb" translate>执行一次</span>
+            <!--执行计划，时间间隔，提示信息-->
+            <span class="text-danger  inlbock"
+                  ng-show="(newAlarmForm.number7.$dirty && newAlarmForm.number7.$invalid)">
+              <span
+                ng-show="(newAlarmForm.number7.$error.required)"
+                class="marLeft inlb sizeNormal hint" translate>时间间隔不能为空</span>
+              <span
+                ng-show="(newAlarmForm.number7.$error.number)"
+                class="marLeft inlb sizeNormal hint" translate>时间间隔必须为数字</span>
+              <span
+                ng-show="(newAlarmForm.number7.$error.min)"
+                class="marLeft inlb sizeNormal hint" translate>时间间隔必须大于0</span>
+            </span>
+            <span class="text-danger  inlbock"
+                  ng-show="errorTimeInterval">
+                <span
+                  class="marLeft inlb sizeNormal hint" translate>执行计划间隔必须大于10秒</span>
+              </span>
+            <span class="text-danger  inlbock"
+                  ng-show="errorIntTimeInterval">
+                <span
+                  class="marLeft inlb sizeNormal hint" translate>时间间隔必须为整数</span>
+              </span>
+            <!--执行计划，时间间隔，提示信息-->
+          </div>
+        </div>
+        <!--通知方式-->
+        <div class="form-group">
+          <label class=" col-md-2 control-label sizeNormal" translate>通知方式</label>
+          <div class="col-md-10 form-inline">
+            <select class="col-md-1 form-control" ng-model="data.notify.type"
+                    ng-change="notifyModeChange(data.notify.type)"
+                    name="notify" ng-options="item.enValue as item.value for item in notifyModes" required>
+
+            </select>
+
+            <div class="inlbock" ng-if="data.notify.type=='email'">
+              <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>
+                <input class="form-control text-ellipsis" type="text" placeholder="{{'多个邮箱地址请使用,隔开'|translate}}"  name="emails"
+                       title={{data.notify.emails}} ng-model="data.notify.emails" required style="width: 15em;">
+              </div>
+
+              <button type="button" class="btn btn-default" ng-click="emailVerify()"
+                      ng-disabled="newAlarmForm.emails.$error.required||errorEmails"><span translate>验证</span>
+              </button>
+              <span class="marLeftMin inlbock">
+              <i aria-label="邮箱验证是必要的环节。点击验证按钮后，系统会将测试邮件发送到您填写的邮件，若收到测试邮件，则表明该邮箱可正常接收告警通知"
+                 tooltip="{{'邮箱验证是必要的环节。点击验证按钮后，系统会将测试邮件发送到您填写的邮件，若收到测试邮件，则表明该邮箱可正常接收告警通知'|translate}}" tooltip-placement="top"
+                 class="fa fa-info-circle"></i>
+              </span>
+              <span class="text-danger" ng-show="newAlarmForm.emails.$dirty && newAlarmForm.emails.$invalid">
+              <span ng-show="newAlarmForm.emails.$error.required"
+                    class="col-md-2 control-label sizeNormal hint fn ptop" translate>请务必填写邮箱信息</span>
+
+              </span>
+              <span class="text-danger"
+                    ng-show="errorEmails">
+                <span
+                  ng-show="newAlarmForm.emails.$dirty"
+                  class="col-md-2 control-label sizeNormal hint fn ptop" translate>请填写正确的邮箱信息</span>
+              </span>
+            </div>
+
+
+          </div>
+        </div>
+        <!--备注-->
+        <div class="form-group">
+          <label class=" col-md-2 control-label sizeNormal" translate>备注</label>
+          <div class="col-md-8">
+            <textarea class="form-control" ng-model="data.description"></textarea>
+          </div>
+        </div>
+
+      </div>
+      <div class="container new-alarm-button">
+        <button type="submit" class="btn btn-warning"
+                ng-disabled="newAlarmForm.$invalid||intervalThreshold||thresholdInvalid||upperThresholdInvalid||timeRangeInvalid||errorTimeInterval||errorEmails||errorAlarmName||errorIntTimeInterval" translate>保存
+        </button>
+        <!--1{{newAlarmForm.$invalid}}-->
+        <!--2{{intervalThreshold}}-->
+        <!--3{{thresholdInvalid}}-->
+        <!--4{{upperThresholdInvalid}}-->
+        <!--5{{timeRangeInvalid}}-->
+        <!--6{{errorTimeInterval}}-->
+        <!--7{{errorEmails}}-->
+        <!--8{{errorAlarmName}}-->
+        <!--9{{errorIntTimeInterval}}-->
+        <button type="button" class="btn btn-warning" ng-click="returnAlarm()" translate>返回</button>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+

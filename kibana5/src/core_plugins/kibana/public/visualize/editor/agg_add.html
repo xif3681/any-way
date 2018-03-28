@@ -1,0 +1,35 @@
+<div ng-show="add.form" class="vis-editor-agg-add-schemas">
+  <label ng-if="vis.type.name !== 'arMonitor'"><span translate>Select</span> {{ groupName |translate}} <span translate>type</span></label>
+  <ul class="form-group list-group list-group-menu">
+    <li
+      ng-hide="schema.deprecate"
+      ng-repeat="schema in availableSchema"
+      ng-click="add.submit(schema)"
+      class="list-group-item list-group-menu-item">
+      <i ng-show="schema.icon" ng-class="schema.icon"></i>
+      {{schema.title|translate}}
+    </li>
+  </ul>
+</div>
+
+<div
+  ng-if="stats.max > stats.count"
+  ng-init="add.form = stats.count < 1 ? !add.form : add.form"
+  ng-click="add.form = !add.form"
+  class="vis-editor-agg-wide-btn">
+
+  <div ng-if="!add.form">
+    <div class="btn btn-sm btn-primary" ng-if="groupName !== 'buckets' || !stats.count && !stats.deprecate">
+      <span translate>Add</span>
+      <span ng-if="vis.type.name !== 'arMonitor'">{{ groupName |translate}}</span>
+      <span ng-if="vis.type.name === 'arMonitor'">{{'监控状态' |translate}}</span>
+    </div>
+    <div class="btn btn-sm btn-primary" ng-if="groupName === 'buckets' && stats.count > 0 && !stats.deprecate">
+      <span translate>Add sub</span>-{{ groupName |translate}}
+    </div>
+  </div>
+  <div class="btn btn-sm btn-primary" ng-if="add.form">
+    <span translate>Cancel</span>
+  </div>
+</div>
+

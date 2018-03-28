@@ -1,0 +1,77 @@
+<table class="table table-condensed">
+  <thead ng-if="loggroup">
+  <tr >
+    <td style="min-width:90px;width: 15%;border:1px solid #ccc" translate>字段</td>
+    <td style="min-width:90px;border:1px solid #ccc" translate>个值</td>
+
+  </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="field in fields" ng-if="!loggroup">
+      <td field-name="field"
+          field-type="mapping[field].type"
+          width="1%"
+          class="doc-viewer-field">
+      </td>
+      <td width="1%" class="doc-viewer-buttons" ng-if="filter">
+        <span ng-if="mapping[field].filterable">
+          <i ng-click="filter(mapping[field], flattened[field], '+')"
+            tooltip="{{'Filter for value'|translate}}"
+            tooltip-append-to-body="1"
+            class="fa fa-search-plus"></i>
+          <i ng-click="filter(mapping[field], flattened[field],'-')"
+            tooltip="{{'Filter out value'|translate}}"
+            tooltip-append-to-body="1"
+            class="fa fa-search-minus"></i>
+        </span>
+        <span ng-if="!mapping[field].filterable" tooltip="{{'Unindexed fields can not be searched'|translate}}">
+          <i class="fa fa-search-plus text-muted"></i>
+          <i class="fa fa-search-minus text-muted"></i>
+        </span>
+        <span ng-if="columns">
+          <i ng-click="toggleColumn(field)"
+            tooltip="{{'Toggle column in table'|translate}}"
+            tooltip-append-to-body="1"
+            class="fa fa-columns"></i>
+        </span>
+        <span ng-if="!indexPattern.metaFields.includes(field)">
+          <i ng-click="filter('_exists_', field, '+')"
+            tooltip="{{'Filter for field present'|translate}}"
+            tooltip-append-to-body="1"
+            class="fa fa-asterisk"></i>
+        </span>
+        <span ng-if="indexPattern.metaFields.includes(field)" tooltip="{{'Unable to filter for presence of meta fields'|translate}}">
+          <i class="fa fa-asterisk text-muted"></i>
+        </span>
+      </td>
+
+      <td>
+        <i ng-if="!mapping[field] && field[0] === '_'"
+          tooltip-placement="top"
+          tooltip="{{'Field names beginning with _ are not supported'|translate}}"
+          class="fa fa-warning text-color-warning ng-scope doc-viewer-underscore"></i>
+        <i ng-if="!mapping[field] && field[0] !== '_' && !showArrayInObjectsWarning(doc, field)"
+          tooltip-placement="top"
+          tooltip="{{'No cached mapping for this field. Refresh field list from the Management > Index Patterns page'|translate}}"
+          class="fa fa-warning text-color-warning ng-scope doc-viewer-no-mapping"></i>
+        <i ng-if="showArrayInObjectsWarning(doc, field)"
+          tooltip-placement="top"
+          tooltip="{{'Objects in arrays are not well supported.'|translate}}"
+          class="fa fa-warning text-color-warning ng-scope doc-viewer-object-array"></i>
+        <div class="doc-viewer-value" ng-bind-html="typeof(formatted[field]) === 'undefined' ? hit[field] : formatted[field] | trustAsHtml"></div>
+      </td>
+    </tr>
+    <tr ng-repeat="field in fields" ng-if="loggroup" style="color: #328caa;">
+      <td style="min-width:90px;width: 15%;border:1px solid #ccc">
+          <div class="doc-viewer-value" >{{field}}</div>
+      </td>
+
+      <td style="min-width:90px;border:1px solid #ccc">
+
+<!--         <div class="doc-viewer-value" ng-bind-html="typeof(formatted[field]) === 'undefined' ? hit[field] : formatted[field] | trustAsHtml"></div> -->
+        <div class="doc-viewer-value" >{{formatted[field]}}</div>
+        <!-- <div class="doc-viewer-value" >{{formatted}}</div> -->
+      </td>
+    </tr>
+  </tbody>
+</table>

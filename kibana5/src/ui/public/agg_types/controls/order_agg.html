@@ -1,0 +1,34 @@
+<div ng-controller="aggParam.controller">
+  <div class="form-group">
+    <label translate>Order By</label>
+    <select
+      name="orderBy"
+      ng-model="agg.params.orderBy"
+      required
+      class="form-control">
+      <option value="_time" ng-if="agg.vis.type.icon ==='fa-tasks'" ng-selected="agg.params.orderBy === '_time'"
+              translate>
+        <span>时间序列</span>
+      </option>
+      <option ng-if="agg.vis.type.icon !=='fa-tasks'"
+              ng-repeat="respAgg in responseValueAggs track by respAgg.id"
+              value="{{respAgg.id}}"
+              ng-selected="agg.params.orderBy === respAgg.id" translate>
+        <span>metric:</span> {{safeMakeLabel(respAgg)}}
+      </option>
+      <option value="custom" ng-selected="agg.params.orderBy === 'custom'" translate>
+        <span>Custom Metric</span>
+      </option>
+      <option value="_term" ng-selected="agg.params.orderBy === '_term'" translate>
+        <span>Term</span>
+      </option>
+    </select>
+  </div>
+  <div ng-show="agg.params.orderAgg" class="vis-editor-agg-order-agg">
+    <vis-editor-agg-params
+      agg="agg.params.orderAgg"
+      ng-if="agg.params.orderAgg"
+      group-name="'metrics'">
+    </vis-editor-agg-params>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="form-group">
+  <label><span translate>Font Size</span> - {{ vis.params.fontSize }}<span translate>pt</span></label>
+  <input type="range" ng-model="vis.params.fontSize" class="form-control" min="12" max="120" />
+</div>
+<div class="form-group" ng-controller="KbnMetricRatiosController">
+  <label>{{ '环比增长率' |translate}}</label>
+  <button ng-if="!vis.params.ratios" ng-click="ratiosChange()" aria-label="Enable aggregation" tooltip="{{'启用环比增长率'|translate}}" tooltip-append-to-body="true"
+          style="float: right;background-color: #fff" type="button" class="btn btn-xs ng-scope">
+    <i aria-hidden="true" class="fa fa-toggle-off" style="color: #5A5A5A;font-size: 18px;"></i>
+  </button>
+  <button ng-if="vis.params.ratios" ng-click="ratiosChange()" aria-label="Enable aggregation" tooltip="{{'禁用环比增长率'|translate}}" tooltip-append-to-body="true"
+          style="float: right;background-color: #fff" type="button" class="btn btn-xs ng-scope">
+    <i aria-hidden="true" class="fa fa-toggle-on" style="color: #5A5A5A;font-size: 18px;"></i>
+  </button>
+</div>

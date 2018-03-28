@@ -1,0 +1,114 @@
+<div class="app-container " ng-controller="alarmRecord">
+  <div class="alarm-navbar-top">
+    <div class="localTabs">
+      <span class="localTab" translate>告警记录</span>
+    </div>
+  </div>
+  <div role="main" class="settings-section-container">
+    <div class="panel panel-default panel-tcpudp data-source alarmRecord">
+      <div class="panel-heading sizeBold" translate>告警任务详情</div>
+      <form class="form-horizontal" role="form"  name="tcpUdp" ng-submit="dataAdd()">
+
+        <div class="form-group marTop">
+          <label class="sizeNormal  col-md-2 control-label" translate>告警名称</label>
+          <div class="col-md-8">
+            <input type="text" class="form-control"  ng-model="data.name" disabled>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="sizeNormal  col-md-2 control-label" translate>已存搜索</label>
+          <div class="col-md-8">
+            <input type="text" class="form-control"   ng-model="data.search.selectedSearch"  disabled>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="sizeNormal  col-md-2 control-label" translate>搜索详情</label>
+          <div class="col-md-8">
+            <div class="form-control searchDetails" disabled>
+              <div><span translate>搜索语句</span>:<span translate>{{data.search.searchDetails}}</span></div>
+              <div><span translate>字段过滤</span>:
+                <div class="filter ng-scope" ng-class="{ negate: filter.meta.negate}" ng-repeat="filter in data.search.filterTypes">
+                  <div class="filter-description">
+                    <span ng-if="!filter.meta.alias&&!filter.meta.disabled" class="ng-binding ng-scope" translate>{{filter.meta.key}}:</span>
+                    <span ng-if="!filter.meta.alias&&!filter.meta.disabled" class="ng-binding ng-scope" translate>"{{filter.meta.value}}"</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="sizeNormal  col-md-2 control-label" translate>告警类型</label>
+          <div class="col-md-8">
+            <input type="text" class="form-control"  disabled ng-model="data.monitor.alertTypeName">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="sizeNormal  col-md-2 control-label" translate>告警条件</label>
+          <div class="col-md-8">
+            <div ng-if="data.monitor.alertTypeEvent" type="text" class="form-control"  disabled >
+              <span><span translate>事件计数 在</span>{{data.monitor.timeRange}}<span translate>{{data.monitor.timeUnit}}</span><span translate>之内 计数</span><span translate>{{data.condition.operator}}</span></span>
+              <span ng-show = "!data.condition.operatorFlag" translate>{{data.condition.threshold}}</span>
+              <span ng-show = "data.condition.operatorFlag">{{data.condition.floorThreshold}}<span translate>和</span>{{data.condition.upperThreshold}}</span>
+            </div>
+            <div ng-if="data.monitor.alertTypeField" type="text" class="form-control"  disabled >
+              <span><span translate>{{data.monitor.field}}</span> <span translate>在</span>{{data.monitor.timeRange}}<span translate>{{data.monitor.timeUnit}}</span><span translate>之内 计数</span><span translate>{{data.condition.operator}}</span></span>
+              <span ng-show = "!data.condition.operatorFlag">{{data.condition.threshold}}</span>
+              <span ng-show = "data.condition.operatorFlag">{{data.condition.floorThreshold}}<span translate>和</span>{{data.condition.upperThreshold}}</span>
+            </div>
+            <div ng-if="data.monitor.alertTypeNumField" type="text" class="form-control"  disabled >
+              <span><span translate>{{data.monitor.field}}</span> <span translate>在</span>{{data.monitor.timeRange}}<span translate>{{data.monitor.timeUnit}}</span><span translate>之内</span> <span translate>{{data.monitor.calculate}}</span><span translate>{{data.condition.operator}}</span></span>
+              <span ng-show = "!data.condition.operatorFlag">{{data.condition.threshold}}</span>
+              <span ng-show = "data.condition.operatorFlag">{{data.condition.floorThreshold}}<span translate>和</span>{{data.condition.upperThreshold}}</span>
+            </div>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="sizeNormal  col-md-2 control-label" translate>执行计划</label>
+          <div class="col-md-8">
+            <!--<input class="form-control"  disabled value="时间间隔 起始时间：{{data.schedule.startDateTime}}，每隔{{data.schedule.timeInterval}}{{data.schedule.timeUnit}}执行一次"/>-->
+            <div class="form-control" style="background-color: #ecf0f1;"><span translate>时间间隔 起始时间：</span>{{data.schedule.startDateTime}}<span translate>，每隔</span>{{data.schedule.timeInterval}}<span translate>{{data.schedule.timeUnit}}</span><span translate>执行一次</span></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="sizeNormal  col-md-2 control-label" translate>备注</label>
+          <div class="col-md-8">
+            <textarea class="form-control description" ng-model="data.description" readonly ></textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="panel panel-default  panel-tcpudp log-structured alarmRecord">
+    <!--<div class=" panel-default  panel-tcpudp log-structured alarmRecord">-->
+      <!-- Default panel contents -->
+      <div class="panel-heading sizeBold" translate>告警记录详情</div>
+      <div class="table-responsive tcpUdpTable">
+        <table class="table alarm-record-table">
+          <thead>
+          <tr class="active">
+            <td translate>序号</td>
+            <td translate>告警时间</td>
+            <td translate>详情</td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="item in alertLogs">
+            <td>{{start+$index + 1}}</td>
+            <td>{{item.alertTime}}</td>
+            <td>{{item.content}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <tm-pagination conf="pageAlarm.recordConf"></tm-pagination>
+      </div>
+    </div>
+    <div class="col-md-2 returnBtn">
+      <button type="button" class="btn btn-warning " ng-click="alarmReturn('/alarm')" translate>返回</button>
+    </div>
+
+
+  </div>
+</div>
+
+

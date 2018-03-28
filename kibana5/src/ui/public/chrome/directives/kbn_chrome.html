@@ -1,0 +1,195 @@
+<div flex layout="row" ng-cloak ng-controller="AppController" ng-init="load()">
+
+  <!--主页面-->
+
+  <div class="content" chrome-context>
+    <div class="app-top-bar" ng-show="chrome.getVisible()">
+      <div style="width: 100%;height: 4px;background-color: #da0000;"></div>
+      <div>
+        <!-- 关于AnyRobot -->
+        <div ng-controller="demoController as demo">
+          <div class="btn-group" dropdown keyboard-nav style="margin-right: 15px;">
+            <div id="simple-btn-keyboard-nav" dropdown-toggle style="font-size: 18px">
+              <i class="fa fa-question-circle" style="font-size: 18px"></i>
+              <span class="caret"></span>
+            </div>
+            <ul class=" dropdown-menu ar-dropdown-menu" id="dropdown-about" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+              <!-- <li role="menuitem"><a translate style="margin-left: 0">使用手册</a></li> -->
+              <li role="menuitem" ng-click="demo.modal()"><a style="margin-left: 0" translate>关于</a></li>
+            </ul>
+          </div>
+          <script type="text/ng-template" id="modal.html">
+            <div class="modal-header">
+              <p class="modal-title"  translate>关于AnyRobot</p>
+              <button type="button" class="close"  aria-label="Close" ng-click="modal.cancel()">
+                <span aria-hidden="true" >&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="body-body">
+                <div class="icon-outer">
+                  <div class="icons"></div>
+                </div>
+                <div class="body-msg">
+                  <p class="fb"><span translate>版本</span>：{{versionInfo.anyrobot_major}}.{{versionInfo.anyrobot_minor}}.{{versionInfo.anyrobot_reversion}}.{{versionInfo.anyrobot_build}}
+                  </p>
+                  <p><span translate>版本时间</span>：{{versionInfo.anyrobot_buildDate}}</p>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <p class="footer-info"><span translate>版权所有</span> © 2016-{{fullYear}} <span
+                translate>上海爱数信息技术股份有限公司。保留一切权利。</span></p>
+              <p class="footer-msg"><a href="https://www.eisoo.com" target="_blank" >https://www.eisoo.com</a></p>
+            </div>
+
+          </script>
+        </div>
+
+        <!-- 用户登录名 -->
+        <div class="btn-group" dropdown keyboard-nav style="margin-right: 20px;top: 38px;"
+             ng-controller="LoginController">
+          <div dropdown-toggle>
+            <i class="fa fa-user" aria-hidden="true" style="font-size: 18px"></i>
+            <span ng-if="!appLogin">{{displayName}}</span>
+            <span ng-if="appLogin">{{appName}}</span>
+            <span class="caret" ng-if="!appLogin"></span>
+          </div>
+
+          <ul ng-if="!appLogin" class=" dropdown-menu ar-dropdown-menu" role="menu" id="dropdown-user"
+              aria-labelledby="simple-btn-keyboard-admin" style="top: 22px;">
+            <li role="menuitem" ng-click="modal()"><a translate style="margin-left: 0">修改密码</a></li>
+            <li role="menuitem" ng-click="LogOff()"><a translate style="margin-left: 0">注销</a></li>
+          </ul>
+          <script type="text/ng-template" id="modify.html">
+            <div class="modal-header">
+              <p class="modal-title" >
+                <span translate>修改密码</span>
+                <span translate ng-if="modifySuss" class=" modifySuss errorColor">修改成功，请重新登录！</span>
+              </p>
+              <button type="button" class="close" aria-label="Close" ng-click="modify.cancel()"
+                      ng-disabled="modifySuss">
+                <span aria-hidden="true" >&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="body-msg">
+                <div  ng-class = "{true: 'div-m-en', false: 'div-m'}[lang === 'en-us']">
+                  <span  ng-class = "{true: 'spanPassword-en', false: 'spanPassword'}[lang === 'en-us']" translate>旧密码</span>
+                  <input  ng-class = "{true: 'inputPassword', false: 'inputPassword-cn'}[lang === 'en-us']" type="text" name="password" onfocus="this.type='password'"
+                         autocomplete="off" ng-model="currentPassword" class="form-control" id="currentPassword"
+                         name="currentPassword"/>
+                </div>
+                <div>
+                  <div ng-if="currentPasswordError" class="bubble" style="top: 0px;left: 71%;">
+                    <div class="arrow"></div>
+                    <div class="bubble_msg">
+                      <span class="errorColor">{{currentPasswordErrorMess|translate}}</span>
+                    </div>
+                  </div>
+                  <div ng-if="systermError && userErrorMessge !== '' || systermError && errorMessge !== ''"
+                       class="bubble" style="top: -14px;left: 71%;">
+                    <div class="arrow"></div>
+                    <div class="bubble_msg">
+                      <span class="errorColor">{{userErrorMessge|translate}}</span>
+                      <span class="errorColor">{{errorMessge|translate}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div ng-class = "{true: 'div-m-en', false: 'div-m'}[lang === 'en-us']">
+                  <span  ng-class = "{true: 'spanPassword-en', false: 'spanPassword'}[lang === 'en-us']" translate>新密码</span>
+                  <input ng-class = "{true: 'inputPassword', false: 'inputPassword-cn'}[lang === 'en-us']" type="text" name="password" onfocus="this.type='password'"
+                         autocomplete="off" ng-model="newPassword" class="form-control" id="newPassword"
+                         name="newPassword"/>
+                </div>
+                <div>
+                  <div ng-if="newPasswordError " class="bubble" style="top: 42px;left: 71%;">
+                    <div class="arrow"></div>
+                    <div class="bubble_msg">
+                      <span class="errorColor">{{newPasswordErrorMess|translate}}</span>
+                    </div>
+                  </div>
+                  <div ng-if="systermError && passErrorMessge !== ''" class="bubble" style="top: 42px;left: 71%;">
+                    <div class="arrow"></div>
+                    <div class="bubble_msg">
+                      <span class="errorColor">{{passErrorMessge|translate}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div ng-class = "{true: 'div-m-en', false: 'div-m'}[lang === 'en-us']">
+                  <span  ng-class = "{true: 'spanPassword-en', false: 'spanPassword'}[lang === 'en-us']" translate>确认密码</span>
+                  <input  ng-class = "{true: 'inputPassword', false: 'inputPassword-cn'}[lang === 'en-us']" type="text" name="password" onfocus="this.type='password'"
+                         autocomplete="off" ng-model="newPasswordChack" class="form-control" id="newPasswordChack"
+                         name="newPasswordChack"/>
+                </div>
+                <div>
+                  <div ng-if="newPasswordChackError" class="bubble" style="top: 84px;left: 71%;">
+                    <div class="arrow"></div>
+                    <div class="bubble_msg">
+                      <span class="errorColor">{{newPasswordChackMess|translate}}</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="modal-footer">
+              <div class="hint-button">
+                <button type="button" ng-click="confirm()" class="btn btn-default button-ok"><span translate>确定</span>
+                </button>
+                <button type="button" ng-click="cancel()" class="btn btn-primary button-cel" ng-disabled="modifySuss"><span
+                  translate>取消</span></button>
+              </div>
+            </div>
+          </script>
+        </div>
+
+        <!-- 语言选择功能 -->
+        <div class="btn-group" dropdown keyboard-nav style="margin-right: 20px;top: 38px;"
+             ng-controller="LanguageController">
+
+          <div id="simple-btn-keyboard-admin" dropdown-toggle>
+            <i class="fa fa-globe" aria-hidden="true" style="font-size: 18px"></i>
+            <span>{{curLang}}</span>
+            <span class="caret"></span>
+          </div>
+          <ul id="dropdown-language" class="dropdown-menu ar-dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-admin" style="top: 22px">
+            <li role="menuitem" ng-repeat="language in languageList">
+              <a href="javascript:void(0)" ng-click="setLang($index)" style="margin-left: 0">{{language.title}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <global-nav
+      style="z-index: 2"
+      chrome="chrome"
+      is-visible="chrome.getVisible()"
+      logo-brand="chrome.getBrand('logo')"
+      small-logo-brand="chrome.getBrand('smallLogo')"
+      app-title="chrome.getAppTitle()"
+    ></global-nav>
+    <div class="app-wrapper" ng-class="{ 'hidden-chrome': !chrome.getVisible() }">
+      <div class="app-wrapper-panel">
+        <kbn-notifications list="notifList"></kbn-notifications>
+        <ar-modal
+          id = "safeMe"
+        >
+
+        </ar-modal>
+        <ar-modal-mult
+          id = "safeMeMult"
+        >
+
+        </ar-modal-mult>
+        <kbn-loading-indicator></kbn-loading-indicator>
+        <div
+          class="application"
+          ng-class="'tab-' + chrome.getFirstPathSegment() + ' ' + chrome.getApplicationClasses()"
+          ng-view
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>

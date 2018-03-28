@@ -1,0 +1,361 @@
+<discover-app class="app-container">
+  <kbn-top-nav name="discover" config="topNavMenu">
+    <div style="display:inline-block;height:34px; line-height:34px;overflow:hidden;">
+      <div>
+                <span ng-show="opts.savedSearch.id" class="kibana-nav-info-title">
+                  <span ng-bind="::opts.savedSearch.title"></span>
+                  <i aria-label="Reload Saved Search" tooltip="{{'Reload Saved Search'|translate}}"
+                     ng-click="resetQuery();" class="fa fa-undo small"></i>
+                </span>
+        <span ng-if="lang!=='en-us'">
+                  <ng-pluralize count="hits" when="{'1':'{{hitAr}}', 'other':'{{hitsAr}}'}"></ng-pluralize>
+                </span>
+        <strong class="discover-info-hits">{{(hits || 0) | number:0}}</strong>
+        <span ng-if="lang==='en-us'">
+                  <ng-pluralize count="hits" when="{'1':'{{hitAr}}', 'other':'{{hitsAr}}'}"></ng-pluralize>
+                </span>&nbsp;&nbsp;
+        <!--
+              <ng-pluralize count="hits" when="{'1':'hit', 'other':'hits'}"></ng-pluralize> -->
+      </div>
+
+    </div>
+  </kbn-top-nav>
+  <navbar name="discover-search">
+    <div class="dis-g-wrap" >
+      <div class="dis-g-title" ng-click="showTheTree()">
+        <span class="dis-g-span" title="{{currentNode.pathInfo}}">{{indexPatternName}}</span>
+        <span class="caret"></span>
+      </div>
+
+    </div>
+
+    <form role="form" class="fill inline-form" ng-submit="fetch()" name="discoverSearch">
+      <div class="typeahead" kbn-typeahead="discover">
+        <div class="input-group"
+             ng-class="discoverSearch.$invalid ? 'has-error' : ''">
+
+          <input
+            parse-query
+            input-focus
+            kbn-typeahead-input
+            ng-model="state.query"
+            style="border:1px solid #bdbdbd;border-top-left-radius: 3px;border-bottom-left-radius: 3px;margin-right: 0"
+            placeholder="{{'Search...'|translate}}"
+            aria-label="Search input"
+            type="text"
+            class="form-control">
+          <button type="submit"
+                  style=" padding: 5px 15px; margin-left: 0;border-top-left-radius: 0;border-bottom-left-radius: 0;"
+                  ng-disabled="discoverSearch.$invalid"
+                  aria-label="Search">
+            <span aria-hidden="true" class="fa fa-search"></span></button>
+        </div>
+        <kbn-typeahead-items></kbn-typeahead-items>
+      </div>
+    </form>
+    <div class="button-group" role="toolbar"></div>
+  </navbar>
+
+  <div class="dis-g-tree" ng-class="{true: 'dis-g-display-block',false:'dis-g-display-none'}[showTree]">
+    <!-- 日志分组树 -->
+    <ar-tree tree-id="disLogTree" method = "treeMethod"></ar-tree>
+
+
+  </div>
+
+  <div class="container-fluid" role="main">
+    <div class="row">
+      <filter-bar state="state"></filter-bar>
+    </div>
+    <div class="row" style="padding: 20px">
+      <div class="col-md-2 sidebar-container collapsible-sidebar">
+        <disc-field-chooser
+          columns="state.columns"
+          refresh="refreshFieldList"
+          hits="rows"
+          field-counts="fieldCounts"
+          filter="filterQuery"
+          index-pattern="searchSource.get('index')"
+          index-pattern-list="opts.indexPatternList"
+          state="state">
+        </disc-field-chooser>
+      </div>
+
+      <div class="discover-wrapper col-md-10">
+        <div class="discover-content">
+          <discover-no-results ng-show="resultState === 'none'"></discover-no-results>
+
+          <!-- loading -->
+          <div ng-show="resultState === 'loading'">
+            <div class="discover-overlay">
+              <h2 translate>Searching</h2>
+              <div ng-show="fetchStatus">{{fetchStatus.complete}}/{{fetchStatus.total}}</div>
+            </div>
+          </div>
+
+          <!-- result -->
+          <div class="results" ng-show="resultState === 'ready'">
+            <div class="discover-timechart" ng-if="opts.timefield">
+              <header>
+                <center class="small">
+                  <span tooltip="{{'To change the time, click the clock icon in the navigation bar'|translate}}">{{timeRange.from | moment}} - {{timeRange.to | moment}}</span>
+
+                  &mdash;
+
+                  <span class="results-interval" ng-hide="showInterval">
+                    <a
+                      ng-click="toggleInterval()">
+                      {{ intervalName |translate}}
+                    </a>
+                  </span>
+
+                  <span ng-show="showInterval" class="results-interval form-inline">
+                    <select
+                      class="form-control"
+                      ng-model="state.interval"
+                      ng-options="interval.val as interval.display for interval in intervalOptions | filter: intervalEnabled"
+                    >
+                    </select>
+                  </span>
+                </center>
+
+              </header>
+
+              <visualize
+                ng-if="vis && rows.length != 0"
+                vis="vis"
+                ui-state="uiState"
+                es-resp="mergedEsResp"
+                search-source="searchSource">
+              </visualize>
+            </div>
+
+
+            <div class="log-display">
+              <!--左侧列表模式-->
+              <div class="btn-group log-navs" dropdown keyboard-nav>
+                <div id="log-display" dropdown-toggle>
+                  <span class="log-title">{{displayModeInit}}</span>
+                  <span class="caret"></span>
+                </div>
+                <ul class="dropdown-menu ar-dropdown-menu" role="menu" aria-labelledby="log-display" style="top: 22px">
+                  <li role="menuitem" ng-repeat="mode in displayMode">
+                    <a href="javascript:void(0)" ng-click="setMode($index)" style="margin-left: 0">{{mode.value}}</a>
+                  </li>
+                </ul>
+              </div>
+              <dis-pagination conf="discover.settingConf"></dis-pagination>
+              <!--右侧日志下载-->
+              <div class="btn-group log-navs log-float-right" dropdown keyboard-nav>
+                <div id="log-download" dropdown-toggle>
+                  <span class="log-title" translate>下载</span>
+                  <span class="caret"></span>
+                </div>
+                <ul class="dropdown-menu ar-dropdown-menu" role="menu" aria-labelledby="log-download" style="top: 22px">
+                  <li role="menuitem" ng-repeat="mode in downloadMode">
+                    <a href="javascript:void(0)" ng-click="modal($index,mode.id)"
+                       style="margin-left: 0">{{mode.value}}</a>
+                  </li>
+                </ul>
+              </div>
+              <!--下载日志弹框-->
+              <script type="text/ng-template" id="download.html">
+                <div id="ar-down-log">
+                  <div class="modal-header">
+                    <p class="modal-title" translate>下载日志</p>
+                    <button type="button" class="close" aria-label="Close" ng-click="down.cancel()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="div-m">
+                      <span class="log-modal-span" translate>文件格式</span>
+                      <span class="" translate>文本</span>
+                    </div>
+                    <div class="div-m">
+                      <span class="log-modal-span" translate>文件名称</span>
+                      <input class="log-modal-input" type="text"
+                             autocomplete="off" ng-model="filename" class="form-control"
+                             name="fileName"/>
+                    </div>
+                    <div class="div-m">
+                      <span class="log-modal-span-error" translate>确定下载后，可到下载列表中查看下载文件</span>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <div class="hint-button">
+                      <button type="button" ng-click="confirm()" class="btn btn-default button-ok">
+                        <span translate>确定</span>
+                      </button>
+                      <button type="button" ng-click="cancel()" ng-disabled="modifySuss"
+                              class="btn btn-primary button-cel">
+                        <span translate>取消</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </script>
+              <!--离线下载日志弹框-->
+              <script type="text/ng-template" id="downloadInfo.html">
+                <div id="ar-down-info">
+                  <div class="modal-header">
+                    <p class="modal-title" translate>离线下载管理</p>
+                    <button type="button" class="close" aria-label="Close" ng-click="downInfo.cancel()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body down-info">
+                    <div class="download-table" ng-show="downloadTable">
+                      <button type="button" ng-click="delAllFile()" ng-disabled="!downItems.length"
+                              class="btn btn-down"><span
+                        translate>一键删除</span></button>
+                      <button type="button" ng-click="pauseStartAllFile(pauseOrStart.id)"
+                              ng-disabled="!downItems.length" class="btn btn-down">
+                        <span translate>{{pauseOrStart.name}}</span>
+                      </button>
+                    </div>
+                    <div class="download-table download-clear" ng-show="!downloadTable">
+                      <button type="button" ng-click="clearAllFile()" ng-disabled="!complateItems.length"
+                              class="btn btn-down"><span
+                        translate>一键清除</span></button>
+                    </div>
+                    <div class="download" ng-click="downloadToggle()"><span translate>正在下载</span>({{downItems.length}})
+                    </div>
+                    <div style="overflow-y: auto;max-height: 300px;">
+                      <table class="table" style="overflow: scroll" class="downloadTable" ng-show="downloadTable">
+                        <tbody ng-if="!downItems.length">
+                        <tr>
+                          <td class="list-none">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="ar-com-td" translate>
+                            没有正在下载任务
+                          </td>
+                        </tr>
+                        </tbody>
+                        <tbody>
+                        <tr ng-if="downItems.length" ng-repeat="downItem in downItems">
+                          <td class="file-icon"></td>
+                          <td style="width: 300px" class="text-over">
+                            <div style="width: 300px" class="text-over" title="{{downItem.filename}}">
+                              {{downItem.filename}}
+                            </div>
+                            <div class="progress">
+                              <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar"
+                                   aria-valuenow="downItem.process" aria-valuemin="0" aria-valuemax="100"
+                                   ng-style="{width: downItem.process+'%'}" style="min-width: 2em; width: 2%;">
+                                {{downItem.process}}%
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div ng-click="pauseFile(downItem,$index)"
+                                 tooltip="{{downItem.status+'startOrPause'|translate}}"
+                                 ng-class="{0: 'file-pause-icon', 2: 'file-start-icon'}[downItem.status]"
+                                 class="file-all-icon">
+                            </div>
+                            <div ng-click="delFile(downItem,$index)" tooltip="{{'删除'|translate}}"
+                                 class="file-all-icon file-delete-icon">
+                            </div>
+                          </td>
+                        </tr>
+
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="complate" ng-click="downloadToggle()"><span translate>已完成</span>({{complateItems.length}})
+                    </div>
+                    <div style="overflow-y: auto;max-height: 300px;">
+                      <table class="table" style="overflow: scroll" class="complateTable" ng-show="!downloadTable">
+                        <tbody ng-if="!complateItems.length">
+                        <tr>
+                          <td class="list-none">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="ar-com-td" translate>
+                            没有已完成任务
+                          </td>
+                        </tr>
+                        </tbody>
+                        <tbody ng-if="complateItems.length">
+                        <tr ng-repeat="complateItem in complateItems">
+                          <td class="file-icon"></td>
+                          <td style="width: 300px" class="text-over">
+                            <div style="width: 300px;margin-top:15px" class="text-over"
+                                 title="{{complateItem.filename}}">
+                              {{complateItem.filename}}
+                            </div>
+                          </td>
+                          <td>
+                            <div ng-click="offlineDown(complateItem,$index)" tooltip="{{'取回本地'|translate}}"
+                                 class="file-all-icon back-file-icon">
+                            </div>
+                            <div ng-click="clearFile(complateItem,$index)" tooltip="{{'清除任务'|translate}}"
+                                 class="file-all-icon clear-file-icon">
+                            </div>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <div class="hint-button">
+                      <button type="button" ng-click="cancel()" class="btn button-close"><span translate>关闭</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </script>
+            </div>
+
+            <div ng-switch="displayModeInitId">
+              <!-- 原始日志 -->
+              <div ng-switch-when="OriginalLog">
+                <div>
+                  <table class="kbn-table table">
+                    <thead>
+                    <tr>
+                      <td translate>原始日志1</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in arRows" ng-if="item._source.message">
+                      <td>{{item._source.message}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- 列表模式 -->
+              <div ng-switch-when="ListMode">
+                <div class="discover-table" fixed-scroll>
+                  <doc-table
+                    hits="arRows"
+                    index-pattern="indexPattern"
+                    sorting="state.sort"
+                    columns="state.columns"
+                    infinite-scroll="true"
+                    filter="filterQuery">
+                  </doc-table>
+
+                  <!--<div ng-if="rows.length == opts.sampleSize" class="discover-table-footer">-->
+                    <!--<center>-->
+                      <!--<span translate>TRANSLATION_SampleSize</span>-->
+                      <!--<a ng-click="toTop()" title="Back to top" translate>Back to top.</a>-->
+                    <!--</center>-->
+                  <!--</div>-->
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</discover-app>

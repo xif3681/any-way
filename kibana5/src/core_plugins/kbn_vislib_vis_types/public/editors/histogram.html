@@ -1,0 +1,13 @@
+<!-- vis type specific options -->
+<div class="vis-option-item form-group">
+  <label>
+    <span translate>Bar Mode</span>
+  </label>
+  <select class="form-control" ng-model="vis.params.mode" ng-options="mode.enValue as mode.value for mode in vis.type.params.modes"></select>
+  <label>
+    <span translate>Y-Axis Scale</span>
+  </label>
+  <select class="form-control" ng-model="vis.params.scale" ng-options="mode.enValue as mode.value for mode in vis.type.params.scales"></select>
+</div>
+<point-series-options></point-series-options>
+<vislib-basic-options></vislib-basic-options>
